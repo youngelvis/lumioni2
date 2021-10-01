@@ -1,0 +1,7 @@
+{
+  "name": "lumioni",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

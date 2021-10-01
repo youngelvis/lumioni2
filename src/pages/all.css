@@ -1,0 +1,16 @@
+input{
+    border-radius: 6px;
+    border-width: thin;
+    padding: 6px;
+    background-color: white;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+
+} 
+button{
+    font-size: 16pt;
+    padding: 16px;
+    background-color: grey;
+    color: white;
+    border-radius: 6px !important;
+}
