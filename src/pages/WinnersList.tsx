@@ -10,70 +10,61 @@ import {
 import React from "react";
 import StockApiService from "../services/StockApiService";
 
-class WinnersList extends React.Component<{}, any> {
+class WinnersList extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
       dataWinners: [],
       stockTicker: ["aapl", "fb", "TSLA", "msft"],
-      isLoading : false
+      isLoading: false,
     };
   }
 
   componentDidMount() {
-    var loopPromise = new Promise<void>((resolve, reject) => {
-      this.setState({
-        isLoadin: true
-      }) 
-      this.state.stockTicker.forEach((a, index, array) => {
-        let portfolioInformation =
-          StockApiService.getInformationForPortfolio(a);
-        // let percentageChange = StockApiService.getChangePercentage(a);
-
-        portfolioInformation
-          .then((informationForportfolio) => {
-            // array item has to enter this state
-            this.setState((prevState) => ({
-              dataWinners: [
-                ...prevState.dataWinners,
-                informationForportfolio,
-              ]
-            }
-            
-            ),()=>{
-                console.log(this.state.dataWinners)
-            });
-          })
-          .finally(() => {
-            if (index === array.length - 1) {
-              this.setState({
-                isLoadin: false
-              })
-              
-              resolve();
-            }
-          });
+    const time = (ms) => {
+      return new Promise((resolve, reject) => {
+        if (!this.state.isloading) {
+          setTimeout(resolve, ms);
+        } else {
+          reject(console.log("shop is closed"));
+        }
       });
-    });
-    loopPromise.then(() => {
-      // this.state.dataWinners.sort((a, b) =>
-      //   a.changePercentage < b.changePercentage ? 1 : -1
-      // );
-      this.sortFunction()
-      
-    });
-    console.log(this.state.dataWinners, "After sort");
-  }
+    };
+    async function winnerList() {
+      try {
+        await time(1000);
+        this.state.stockTicker.forEach((a) => {
+          let portfolioInformation =
+            StockApiService.getInformationForPortfolio(a);
+          // let percentageChange = StockApiService.getChangePercentage(a);
 
-  sortFunction =()=>{
-    if (!this.state.isloading ){
-       this.state.dataWinners.sort((a, b) =>
-        a.changePercentage < b.changePercentage ? 1 : -1
-      );
-      this.forceUpdate()
+          portfolioInformation.then((informationForportfolio) => {
+            // array item has to enter this state
+            this.setState(
+              (prevState) => ({
+                dataWinners: [
+                  ...prevState.dataWinners,
+                  informationForportfolio,
+                ],
+              }),
+              () => console.log(this.state.dataWinners)
+            );
+          });
+        });
+
+        await time(2000);
+
+        this.state.dataWinners.sort((a, b) =>
+          a.changePercentage < b.changePercentage ? 1 : -1
+        );
+        console.log(this.state.dataWinners);
+      } catch (error) {
+      } finally {
+      }
     }
-  }
 
+    winnerList();
+  }
 
   render() {
     return (
