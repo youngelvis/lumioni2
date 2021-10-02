@@ -30,9 +30,11 @@ class WinnersList extends React.Component<any, any> {
         }
       });
     };
-    async function winnerList() {
+
+    var winnerList = async () => {
       try {
-        await time(1000);
+       await time(1000);
+        
         this.state.stockTicker.forEach((a) => {
           let portfolioInformation =
             StockApiService.getInformationForPortfolio(a);
@@ -59,6 +61,7 @@ class WinnersList extends React.Component<any, any> {
         );
         console.log(this.state.dataWinners);
       } catch (error) {
+        console.log(error);
       } finally {
       }
     }

@@ -16,7 +16,10 @@ class ListItem extends Component<any, any> {
         return(
             <div>
                 
-               <Link to={{pathname :"/portfolioDetails", state:{selectedTicker: this.props.items.selectedTicker} }}
+               <Link to={{
+                   pathname :`/portfolioDetails/${this.props.items.selectedTicker}`, 
+                   state:{stockInfo: this.props.items}
+                 }}
                >{this.props.items.selectedTicker}</Link>
                 <IonIcon onClick={()=>this.props.handleDelete(this.props.indexNum)} icon={trash}></IonIcon>
             </div>

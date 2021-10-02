@@ -163,9 +163,7 @@ class App extends Component<any, any> {
                 <Route exact path="/winnerPage">
                   <WinnersList />
                 </Route>
-                <Route exact path="/portfolioDetails">
-                  <PortfolioDetails />
-                </Route>
+                <Route exact path="/portfolioDetails/:ticker" component={PortfolioDetails}/>
                 <Route exact path="/losersPage">
                   <LosersList />
                 </Route>

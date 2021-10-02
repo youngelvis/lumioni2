@@ -7,25 +7,17 @@ import {
   IonToolbar,
  
 } from "@ionic/react";
+
 import React from "react";
 import News from "../components/News";
 import StockGraph from "../components/StockGraph";
 import StockRow from "../components/StockRow";
 
 class PortfolioDetails extends React.Component<any, any> {
-    constructor (props){
-        super(props)
-        this.state ={
-            
-        }
-        
-    }
-    componentDidMount(){
-      console.log(this.props.location)
-    }
-     
+
   render() {
-   
+    const { match, location } = this.props
+    console.log(this.props, "Bemi")
     return (
       <IonPage>
         <IonToolbar>
@@ -49,11 +41,11 @@ class PortfolioDetails extends React.Component<any, any> {
               <div></div>
             </div>
             StockGraph
-                <StockGraph />
+                <StockGraph selectedTicker= {match.params.ticker} />
                 portfolio info
-                <StockRow selectedTicker= 'aapl' />
+                <StockRow stockInfo= {location.state.selectedTicker} />
                 business news
-                <News selectedTicker= 'aapl'/>
+                <News selectedTicker= {match.params.ticker}/>
             </div>
             </IonContent>
 

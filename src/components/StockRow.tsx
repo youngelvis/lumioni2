@@ -15,7 +15,7 @@ class StockRow extends React.Component<any, any> {
   componentDidMount() {
     var loopPromise = new Promise<void>((resolve, reject) => {
       let portfolioInformation = StockApiService.getInformationForPortfolio(
-        this.props.selectedTicker
+        this.props.stockInfo.selectedTicker
       );
       // let percentageChange = StockApiService.getChangePercentage(a);
 
