@@ -13,6 +13,7 @@ import { Redirect } from "react-router";
 import ListFiller from "../components/ListFiller";
 
 import ListItem from "../components/ListItems";
+import CurrentValue from "../components/CurrentValue";
 
 // import StockGraph from "../components/StockGraph";
 
@@ -141,19 +142,25 @@ class List extends Component<any, any> {
               <div style={{ textAlign: "center" }}>
                 <div>
                   <ListFiller collectData={this.getInformationFromForm} />
+
                   {items
                     ? items.map((item, indexNum) => (
-                        <ListItem
-                          key={indexNum}
-                          items={item}
-                          indexNum={indexNum}
-                          handleDelete={this.handleDelete}
-                        />
+                        <div key={indexNum}>
+                          <ListItem
+                            key={indexNum}
+                            items={item}
+                            indexNum={indexNum}
+                            handleDelete={this.handleDelete}
+                          />
+                          <CurrentValue
+                            collectData={this.getInformationFromForm}
+                            items={item}
+                          />
+                        </div>
                       ))
                     : "there are no items in the list"}
-         
                 </div>
-                
+
                 <br />
                 <br />
                 <button onClick={this.handleSignOut}>sign out</button>

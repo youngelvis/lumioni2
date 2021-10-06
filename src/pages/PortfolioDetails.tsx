@@ -16,8 +16,8 @@ import StockRow from "../components/StockRow";
 class PortfolioDetails extends React.Component<any, any> {
 
   render() {
-    const { match, location } = this.props
-    console.log(this.props, "Bemi")
+    const { match, location, history } = this.props
+    console.log(this.props, "elvis")
     return (
       <IonPage>
         <IonToolbar>
@@ -43,7 +43,7 @@ class PortfolioDetails extends React.Component<any, any> {
             StockGraph
                 <StockGraph selectedTicker= {match.params.ticker} />
                 portfolio info
-                <StockRow stockInfo= {location.state.selectedTicker} />
+                <StockRow stockInfo= {history.location.state.stockInfo} />
                 business news
                 <News selectedTicker= {match.params.ticker}/>
             </div>

@@ -21,6 +21,24 @@ class StockApiService {
 
   return result;
   }
+  static async getLatestPrice(ticker) {
+    let info ='';
+    let url2 = `${iex.base_url}/stock/${ticker}/batch?types=quote,news,chart&range=1m&last=10&token=${iex.api_token}`;
+
+    // fetch the data from the api
+    const latestPrice = fetch(url2)
+    .then((response) => response.json())
+    .then((data) => {
+      info = data.quote.latestPrice;
+      return info;
+    });
+
+ 
+
+  const result = await latestPrice;
+
+  return result;
+  }
   static async getCompanyName(ticker) {
     let info = "";
     let url2 = `${iex.base_url}/stock/${ticker}/batch?types=quote,news,chart&range=1m&last=10&token=${iex.api_token}`;

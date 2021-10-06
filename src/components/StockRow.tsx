@@ -1,6 +1,4 @@
 import React from "react";
-import { IonIcon } from "@ionic/react";
-import {trash} from "ionicons/icons"
 
 import StockApiService from "../services/StockApiService";
 
@@ -9,6 +7,7 @@ class StockRow extends React.Component<any, any> {
     super(props);
     this.state = {
       portfolioData: [],
+      stockInfo: [],
     };
   }
 
@@ -17,30 +16,48 @@ class StockRow extends React.Component<any, any> {
       let portfolioInformation = StockApiService.getInformationForPortfolio(
         this.props.stockInfo.selectedTicker
       );
-      // let percentageChange = StockApiService.getChangePercentage(a);
 
       portfolioInformation
         .then((informationForportfolio) => {
           // array item has to enter this state
           this.setState((prevState) => ({
-            portfolioData: [...prevState.portfolioData, informationForportfolio],
+            portfolioData: [
+              ...prevState.portfolioData,
+              informationForportfolio,
+            ],
           }));
         })
         .finally(() => {
-          // if (index === array.length - 1) {
-          //   resolve();
-          // }
+          this.addingStockInfoToPortfolioData();
         });
     });
 
-    loopPromise.then(() => {
-      
-      
-      
-    });
+    loopPromise.then(() => {});
   }
 
-  // console.log(data1[1].companyName, "des");
+  addingStockInfoToPortfolioData = () => {
+    const cost = Number(this.props.stockInfo.enteredAmount);
+    const shares = Number(this.props.stockInfo.enteredShare);
+    const latestPrice = Number(this.state.portfolioData[0].latestPrice);
+    let totalCost = cost * shares;
+    let totalValue = latestPrice * shares;
+    let portfolioValue = totalValue - totalCost;
+    let percentageChange = (totalCost / totalValue) * 100;
+    let calculation = {
+      totalCost,
+      portfolioValue,
+      percentageChange,
+      totalValue,
+    };
+    // pushing this to the stockInfo in the state
+    this.setState((prevState) => ({
+      stockInfo: [
+        ...prevState.stockInfo,
+        calculation
+      ],
+    }));
+    console.log(this.state.stockInfo)
+  };
 
   render() {
     return (
@@ -48,7 +65,6 @@ class StockRow extends React.Component<any, any> {
         {this.state.portfolioData.map((stocks) => (
           <div key={stocks.companyName}>
             {stocks.companyName} {stocks.latestTime}
-            <IonIcon onClick={()=>this.props.handleDelete(this.props.indexNum)} icon={trash}></IonIcon>
           </div>
         ))}
       </div>
