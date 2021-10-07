@@ -23,7 +23,7 @@ class LosersList extends React.Component<any, any> {
     var loopPromise = new Promise<void>((resolve, reject) => {
       this.state.stockTicker.forEach((a, index, array) => {
         let portfolioInformation =
-          StockApiService.getInformationForPortfolio(a);
+          StockApiService.getInformationForSorting(a);
         // let percentageChange = StockApiService.getChangePercentage(a);
 
         portfolioInformation

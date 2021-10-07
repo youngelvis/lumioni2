@@ -1,43 +1,37 @@
-
 import { iex } from "../config/iex";
 
 class StockApiService {
-
   static async getChangePercentage(ticker) {
-    let info ='';
+    let info = "";
     let url2 = `${iex.base_url}/stock/${ticker}/batch?types=quote,news,chart&range=1m&last=10&token=${iex.api_token}`;
 
     // fetch the data from the api
     const changePercentage = fetch(url2)
-    .then((response) => response.json())
-    .then((data) => {
-      info = data.quote.changePercent;
-      return info;
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        info = data.quote.changePercent;
+        return info;
+      });
 
- 
+    const result = await changePercentage;
 
-  const result = await changePercentage;
-
-  return result;
+    return result;
   }
   static async getLatestPrice(ticker) {
-    let info ='';
+    let info = "";
     let url2 = `${iex.base_url}/stock/${ticker}/batch?types=quote,news,chart&range=1m&last=10&token=${iex.api_token}`;
 
     // fetch the data from the api
     const latestPrice = fetch(url2)
-    .then((response) => response.json())
-    .then((data) => {
-      info = data.quote.latestPrice;
-      return info;
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        info = data.quote.latestPrice;
+        return info;
+      });
 
- 
+    const result = await latestPrice;
 
-  const result = await latestPrice;
-
-  return result;
+    return result;
   }
   static async getCompanyName(ticker) {
     let info = "";
@@ -51,8 +45,6 @@ class StockApiService {
         return info;
       });
 
-    
-
     const result = await companyName;
 
     return result;
@@ -60,7 +52,7 @@ class StockApiService {
   // trying to make this return an object of news data
   static async getNewsInformation(ticker) {
     let info = [];
-    
+
     let url2 = `${iex.base_url}/stock/${ticker}/batch?types=quote,news,chart&range=1m&last=10&token=${iex.api_token}`;
 
     // fetch the data from the api
@@ -69,124 +61,110 @@ class StockApiService {
       .then((data) => {
         // eslint-disable-next-line array-callback-return
         data.news.map((news) => {
-          let newsData ={
+          let newsData = {
             newsHeadlines: news.headline,
             newsSummary: news.summary,
             newsSource: news.source,
             newsUrl: news.url,
-            newsImage : news.image
-          }
-         
+            newsImage: news.image,
+          };
+
           info.push(newsData);
-          
-          
         });
-        return info
+        return info;
       });
 
     const getNews = async () => {
       const InformationForNews = await newsInformation;
       return InformationForNews;
-    }
-      const result = await getNews()
-      return result;
+    };
+    const result = await getNews();
+    return result;
   }
-  // api call for news summary
-  // static async getNewsSummary(ticker) {
-  //   let info = [];
-  //   let url2 = `${iex.base_url}/stock/${ticker}/batch?types=quote,news,chart&range=1m&last=10&token=${iex.api_token}`;
 
-  //   // fetch the data from the api
-  //   const newsSummary = fetch(url2)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       data.news.map((news) => info.push(news.summary));
-  //       return info;
-  //     });
-
-  //   const getSummary = async () => {
-  //     const summaryOfNews = await newsSummary;
-  //     return summaryOfNews;
-  //   }
-  //     const result = await getSummary()
-  //     return result;
-
-
-  // //   let url2 = `${iex.base_url}/stock/${ticker}/batch?types=quote,news,chart&range=1m&last=10&token=${iex.api_token}`;
-
-  // //   // fetch the data from the api
-  // //   fetch(url2)
-  // //     // get the response in json format
-  // //     .then((response) => response.json())
-  // //     .then((data) => data.news.map((news) => console.log(news.summary)));
-  // }
-
-  // static async getNewsHeadLines(ticker) {
-
-  //   let info = [];
-  //   let url2 = `${iex.base_url}/stock/${ticker}/batch?types=quote,news,chart&range=1m&last=10&token=${iex.api_token}`;
-
-  //   // fetch the data from the api
-  //   const newsHeadlines = fetch(url2)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       data.news.map((news) => info.push(news.headline));
-  //       return info;
-  //     });
-
-  //   const getHeadLines = async () => {
-  //     const headlinesOfNews = await newsHeadlines;
-  //     return headlinesOfNews;
-  //   }
-  //     const result = await getHeadLines()
-  //     return result;
-  // }
-  // information that will be displayed in the portfolio list 
   static async getInformationForPortfolio(ticker) {
-
-    
-   
     let url2 = `${iex.base_url}/stock/${ticker}/batch?types=quote,news,chart&range=1m&last=10&token=${iex.api_token}`;
 
     // fetch the data from the api
     const informationForPortolio = fetch(url2)
       .then((response) => response.json())
       .then((data) => {
-        
-          let PortfolioData ={
-            companyName:  data.quote.companyName,
-            changePrice: data.quote.change,
-            currency: data.quote.currency,
-            latestPrice: data.quote.latestPrice,
-            openPrice: data.quote.iexOpen,
-            isMarketOpen: data.quote.isUSMarketOpen,
-            latestTime: data.quote.latestTime,
-            changePercentage: data.quote.changePercent
-          }
-          
-          
-          return PortfolioData
-        });
-        
-      ;
+        let PortfolioData = {
+          companyName: data.quote.companyName,
+          changePrice: data.quote.change,
+          currency: data.quote.currency,
+          latestPrice: data.quote.latestPrice,
+          openPrice: data.quote.iexOpen,
+          isMarketOpen: data.quote.isUSMarketOpen,
+          latestTime: data.quote.latestTime,
+          changePercentage: data.quote.changePercent,
+        };
 
-  const getPortfolioInformation = async () => {
-    const priceClose = await informationForPortolio;
-    return priceClose;
-  };
+        return PortfolioData;
+      });
 
-  const result = await getPortfolioInformation();
+    const getPortfolioInformation = async () => {
+      const priceClose = await informationForPortolio;
+      return priceClose;
+    };
 
-  return result;
-    // let url2 = `${iex.base_url}/stock/${ticker}/batch?types=quote,news,chart&range=1m&last=10&token=${iex.api_token}`;
+    const result = await getPortfolioInformation();
 
-    // // fetch the data from the api
-    // fetch(url2)
-    //   // get the response in json format
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data.quote.close);
-    //   });
+    return result;
+  }
+  // fetch the data from the api for explore page
+  static async getInformationForExplore(ticker) {
+    let url2 = `${iex.base_url}/stock/${ticker}/batch?types=quote,news,chart&range=1m&last=10&token=${iex.api_token}`;
+
+    // fetch the data from the api
+    const informationForExplore = fetch(url2)
+      .then((response) => response.json())
+      .then((data) => {
+        let PortfolioData = {
+          companyName: data.quote.companyName,
+          currency: data.quote.currency,
+          latestPrice: data.quote.latestPrice,
+          changePercentage: data.quote.changePercent,
+        };
+
+        return PortfolioData;
+      });
+
+    const getPortfolioInformation = async () => {
+      const priceClose = await informationForExplore;
+      return priceClose;
+    };
+
+    const result = await getPortfolioInformation();
+
+    return result;
+  }
+  // fetch the data from the APi for the winner and loser component
+  static async getInformationForSorting(ticker) {
+    let url2 = `${iex.base_url}/stock/${ticker}/batch?types=quote,news,chart&range=1m&last=10&token=${iex.api_token}`;
+
+    // fetch the data from the APi
+    const informationForSorting = fetch(url2)
+      .then((response) => response.json())
+      .then((data) => {
+        let PortfolioData = {
+          companyName: data.quote.companyName,
+          changePrice: data.quote.change,
+
+          changePercentage: data.quote.changePercent,
+        };
+
+        return PortfolioData;
+      });
+
+    const getPortfolioInformation = async () => {
+      const priceClose = await informationForSorting;
+      return priceClose;
+    };
+
+    const result = await getPortfolioInformation();
+
+    return result;
   }
 }
 

@@ -37,7 +37,7 @@ class WinnersList extends React.Component<any, any> {
         
         this.state.stockTicker.forEach((a) => {
           let portfolioInformation =
-            StockApiService.getInformationForPortfolio(a);
+            StockApiService.getInformationForSorting(a);
           // let percentageChange = StockApiService.getChangePercentage(a);
 
           portfolioInformation.then((informationForportfolio) => {

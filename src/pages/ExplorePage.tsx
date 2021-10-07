@@ -20,27 +20,22 @@ class ExplorePage extends React.Component<any, any> {
   componentDidMount() {
     var loopPromise = new Promise<void>((resolve, reject) => {
       this.state.stockTicker.forEach((a, index, array) => {
-        let companyName = StockApiService.getCompanyName(a);
+        let portfolioInformation =
+        StockApiService.getInformationForSorting(a);
+      // let percentageChange = StockApiService.getChangePercentage(a);
 
-        // let percentageChange = StockApiService.getChangePercentage(a);
-        companyName
-          .then((nameOfCompany) => {
-            let percentageChange = StockApiService.getChangePercentage(a);
-
-            percentageChange.then((changePercentage) => {
-              // var realDataArray = [];
-              const realData = {
-                companyName: nameOfCompany,
-                changePercentage: changePercentage,
-                ticker: a,
-              };
-              // realDataArray.push(realData)
-
-              this.setState((prevState) => ({
-                exploreList: [...prevState.exploreList, realData],
-              }));
-            });
-          })
+      portfolioInformation
+        .then((informationForportfolio) => {
+          // array item has to enter this state
+          this.setState((prevState) => ({
+            exploreList: [
+              ...prevState.exploreList,
+              informationForportfolio,
+            ]
+          }
+          
+          ));
+        })
           .finally(() => {
             if (index === array.length - 1) {
               resolve();

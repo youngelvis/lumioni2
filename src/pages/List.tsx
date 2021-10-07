@@ -14,6 +14,7 @@ import ListFiller from "../components/ListFiller";
 
 import ListItem from "../components/ListItems";
 import CurrentValue from "../components/CurrentValue";
+import PortfolioSummary from "../components/PortfolioSummary";
 
 // import StockGraph from "../components/StockGraph";
 
@@ -142,6 +143,7 @@ class List extends Component<any, any> {
               <div style={{ textAlign: "center" }}>
                 <div>
                   <ListFiller collectData={this.getInformationFromForm} />
+                  {/* <PortfolioSummary portfolioItems ={items}/> */}
 
                   {items
                     ? items.map((item, indexNum) => (
@@ -152,10 +154,7 @@ class List extends Component<any, any> {
                             indexNum={indexNum}
                             handleDelete={this.handleDelete}
                           />
-                          <CurrentValue
-                            collectData={this.getInformationFromForm}
-                            items={item}
-                          />
+                          <CurrentValue items={item} />
                         </div>
                       ))
                     : "there are no items in the list"}
