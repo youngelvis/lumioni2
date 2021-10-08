@@ -149,8 +149,6 @@ class StockApiService {
       .then((data) => {
         let PortfolioData = {
           companyName: data.quote.companyName,
-          changePrice: data.quote.change,
-
           changePercentage: data.quote.changePercent,
         };
 
