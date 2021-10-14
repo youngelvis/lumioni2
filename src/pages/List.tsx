@@ -14,7 +14,7 @@ import ListFiller from "../components/ListFiller";
 
 import ListItem from "../components/ListItems";
 import CurrentValue from "../components/CurrentValue";
-import PortfolioSummary from "../components/PortfolioSummary";
+import StockApiService from "../services/StockApiService";
 
 // import StockGraph from "../components/StockGraph";
 
@@ -23,6 +23,8 @@ class List extends Component<any, any> {
     super(props);
     this.state = {
       dataFromForm: "",
+      tempData: "",
+      portfolio: [],
     };
   }
   // function to get item from ListFiller component
@@ -43,13 +45,12 @@ class List extends Component<any, any> {
   handleDelete = (indexNum) => {
     // console.log(indexNum)
 
-    // the current snapshot of the database
-    var currentStocks = this.props.appState.userData.portfolio;
-
     // removing item from the database
 
-    currentStocks.splice(indexNum, 1);
+    // currentStocks.splice(indexNum, 1);
+    this.props.appState.userData.portfolio.splice(indexNum, 1);
 
+    this.setState({ tempData: "gsfsf" });
     //get the user Id
     var uid = this.props.appState.firebaseUser.uid;
     // access the document in the database
@@ -58,7 +59,7 @@ class List extends Component<any, any> {
     // updating the database
     docRef
       .update({
-        portfolio: currentStocks,
+        portfolio: this.props.appState.userData.portfolio,
       })
       .then(() => {
         console.log("current stock successfully deleted!");
@@ -68,15 +69,12 @@ class List extends Component<any, any> {
         console.error("Error updating document: ", error);
       });
     // to force the application to render again
-    this.forceUpdate();
+    // this.forceUpdate();
   };
   // function to add item from the state
   handleAdd = () => {
-    // the current snapshot of the database
-    var currentStocks = this.props.appState.userData.portfolio;
-
     // adding new items to the new array
-    currentStocks.push(this.state.dataFromForm);
+    this.props.appState.userData.portfolio.push(this.state.dataFromForm);
 
     //get the user Id
     var uid = this.props.appState.firebaseUser.uid;
@@ -86,7 +84,7 @@ class List extends Component<any, any> {
     // updating the database
     docRef
       .update({
-        portfolio: currentStocks,
+        portfolio: this.props.appState.userData.portfolio,
       })
       .then(() => {
         console.log("current stock successfully added!");
@@ -112,7 +110,50 @@ class List extends Component<any, any> {
         console.log(error);
       });
   };
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    setTimeout(()=>this.getCurrentValue(),2000)
+  };
+
+  getCurrentValue = () => {
+    console.log(this.props.appState.userData.portfolio);
+
+    let currentValue;
+    this.props.appState.userData.portfolio.map((portfolioA) =>{
+      console.log(portfolioA.enteredAmount);
+
+      const latestPrice = StockApiService.getLatestPrice(
+        portfolioA.selectedTicker
+      );
+      latestPrice.then((latestP) => {
+        let latestprice = Number(latestP);
+
+        console.log(latestprice);
+         currentValue = portfolioA.enteredShare * latestprice;
+         
+        //get the user Id
+    //   var uid = this.props.appState.firebaseUser.uid;
+
+    //   var docRef = db.collection("userData").doc(uid);
+    //   docRef
+    //   .update({
+    //     portfolio: [{totalValue: currentValue}]
+    // })
+    //     .catch((error) => {
+    //       // The document probably doesn't exist.
+    //       console.error("Error updating document: ", error);
+    //     });
+        
+      });
+      
+      
+    });
+  };
+
+  //       let currentValue = portfolio.enteredShare * latestprice
+  //       portfolio.currentValue = currentValue;
+  //     });
+
+  //   });
 
   render() {
     if (this.props.appState.loggedIn == null) {
@@ -120,8 +161,6 @@ class List extends Component<any, any> {
     } else if (this.props.appState.loggedIn === false) {
       return <Redirect to="/home"></Redirect>;
     } else {
-      var items = this.props.appState.userData.portfolio;
-      //   console.log(items)
       return (
         <IonPage>
           <IonHeader>
@@ -145,18 +184,20 @@ class List extends Component<any, any> {
                   <ListFiller collectData={this.getInformationFromForm} />
                   {/* <PortfolioSummary portfolioItems ={items}/> */}
 
-                  {items
-                    ? items.map((item, indexNum) => (
-                        <div key={indexNum}>
-                          <ListItem
-                            key={indexNum}
-                            items={item}
-                            indexNum={indexNum}
-                            handleDelete={this.handleDelete}
-                          />
-                          <CurrentValue items={item} />
-                        </div>
-                      ))
+                  {this.props.appState.userData.portfolio
+                    ? this.props.appState.userData.portfolio.map(
+                        (item, indexNum) => (
+                          <div key={indexNum}>
+                            <ListItem
+                              key={indexNum}
+                              items={item}
+                              indexNum={indexNum}
+                              handleDelete={this.handleDelete}
+                            />
+                            <CurrentValue items={item} />
+                          </div>
+                        )
+                      )
                     : "there are no items in the list"}
                 </div>
 

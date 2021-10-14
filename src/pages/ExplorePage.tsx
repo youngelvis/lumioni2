@@ -4,6 +4,9 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
+  IonList,
+  IonItem,
+  IonLabel,
 } from "@ionic/react";
 import React from "react";
 import { Redirect } from "react-router";
@@ -13,29 +16,23 @@ class ExplorePage extends React.Component<any, any> {
     super(props);
     this.state = {
       exploreList: [],
-      stockTicker: ["aapl", "fb","googl"],
+      stockTicker: ["aapl", "fb", "googl"],
     };
   }
 
   componentDidMount() {
     var loopPromise = new Promise<void>((resolve, reject) => {
       this.state.stockTicker.forEach((a, index, array) => {
-        let portfolioInformation =
-        StockApiService.getInformationForSorting(a);
-      // let percentageChange = StockApiService.getChangePercentage(a);
+        let portfolioInformation = StockApiService.getInformationForExplore(a);
+        // let percentageChange = StockApiService.getChangePercentage(a);
 
-      portfolioInformation
-        .then((informationForportfolio) => {
-          // array item has to enter this state
-          this.setState((prevState) => ({
-            exploreList: [
-              ...prevState.exploreList,
-              informationForportfolio,
-            ]
-          }
-          
-          ));
-        })
+        portfolioInformation
+          .then((informationForportfolio) => {
+            // array item has to enter this state
+            this.setState((prevState) => ({
+              exploreList: [...prevState.exploreList, informationForportfolio],
+            }));
+          })
           .finally(() => {
             if (index === array.length - 1) {
               resolve();
@@ -61,25 +58,24 @@ class ExplorePage extends React.Component<any, any> {
               <IonTitle>Explore PAGE</IonTitle>
             </IonToolbar>
           </IonHeader>
-          <IonContent color="primary">
-            <div
-              style={{
-                padding: "16px",
-                backgroundColor: "lightblue",
-                margin: "12px",
-                color: "black",
-                borderRadius: "6px",
-                fontSize: "16pt",
-              }}
-            >
-              <div style={{ textAlign: "center" }}>
-                <div>
-                  {this.state.exploreList.map((stocks) => (
-                    <div key={stocks.companyName}>{stocks.ticker} {stocks.companyName}</div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <IonContent>
+          <IonList>
+                
+            {this.state.exploreList.map((item)=>(
+                  <IonItem>
+                   <IonLabel class="ion-text-justify"slot='start'>
+                     <h3>{item.ticker}</h3>
+                     <h2>{item.companyName}</h2>
+                   </IonLabel>
+                   <IonLabel class="ion-text-wrap" slot="end">
+                     <h2>{item.latestPrice}</h2>
+                   </IonLabel>
+                   </IonItem>
+               
+            ))}
+             
+               </IonList>
+           
           </IonContent>
         </IonPage>
       );

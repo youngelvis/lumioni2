@@ -124,7 +124,7 @@ class StockApiService {
           companyName: data.quote.companyName,
           currency: data.quote.currency,
           latestPrice: data.quote.latestPrice,
-          changePercentage: data.quote.changePercent,
+          ticker: ticker,
         };
 
         return PortfolioData;

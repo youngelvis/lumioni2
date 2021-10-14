@@ -21,8 +21,6 @@ class CurrentValue extends React.Component<any, any> {
       });
       this.businessLogic(latestprice);
     });
-
-
     
     
   };
@@ -32,7 +30,7 @@ class CurrentValue extends React.Component<any, any> {
 
     let totalCost = cost * shares;
     let totalValue = Number(this.state.latestPrice) * shares;
-    let difference =  totalCost - totalValue ;
+    let difference =   totalValue - totalCost ;
     let percentageChange = (totalCost / totalValue) * 100;
     let calculation = {
       totalCost,

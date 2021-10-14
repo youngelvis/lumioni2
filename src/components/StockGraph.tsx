@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
 function StockGraph(props) {
@@ -48,24 +49,30 @@ function StockGraph(props) {
     fetchStock();
   }, [stockSymbol, props.selectedTicker]);
 
-  
   return (
+    
     <div>
       <h1>Stock Market</h1>
-      <Plot
-        data={[
-          {
-            x: stockChartXValues,
-            y: stockChartYValues,
-            type: "scatter",
-            mode: "lines+markers",
-            marker: { color: "red" },
-          },
-        ]}
-        layout={{ width: 440, height: 440, title: stockSymbol }}
-      />
-      <div></div>
+     
+      <div>
+          <Plot
+            data={[
+              {
+                x: stockChartXValues,
+                y: stockChartYValues,
+                type: "scatter",
+                mode: "lines+markers",
+                marker: { color: "red" },
+              },
+            ]}
+            layout={{ autosize: true, title: stockSymbol }}
+          />
+       
+      
+
+      </div>
     </div>
+
   );
 }
 

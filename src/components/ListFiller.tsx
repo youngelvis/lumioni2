@@ -1,5 +1,8 @@
 import { Component } from "react";
 import SelectedTicker from "./SelectedTicker";
+
+import StockApiService from "../services/StockApiService";
+
 class ListFiller extends Component<any, any> {
   constructor(props) {
     super(props);
@@ -9,8 +12,13 @@ class ListFiller extends Component<any, any> {
       enteredShare: "",
       enteredAmount: "",
       enteredDate: "",
+      companyName: "",
+      totalCost: "",
+      totalValue: "",
+      percentageChange: ""
     };
   }
+  
   // collecting the value from the html form
   handleChange = (e) => {
     var value = e.target.value;
@@ -34,7 +42,20 @@ class ListFiller extends Component<any, any> {
   // used to collect the data stored in the state
   handleAdd = () => {
     // this.props.onListState(this.state);
-    this.props.collectData(this.state)
+
+  
+    const companyName = StockApiService.getCompanyName(
+      this.state.selectedTicker
+    );
+
+    companyName.then((companyName)=>{
+        this.setState({companyName: companyName});
+        this.setState({totalCost: this.state.enteredShare * this.state.enteredAmount})
+        this.props.collectData(this.state)
+    })
+
+    
+
   };
   
   render() {
