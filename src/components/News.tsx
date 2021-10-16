@@ -5,6 +5,7 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
+  IonImg,
 } from "@ionic/react";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -16,7 +17,6 @@ class News extends React.Component<any, any> {
     super(props);
     this.state = {
       dataWinners: [],
-      stockTicker: ["aapl", "fb"],
     };
   }
 
@@ -25,7 +25,7 @@ class News extends React.Component<any, any> {
       let portfolioInformation = StockApiService.getNewsInformation(
         this.props.selectedTicker
       );
-      // let percentageChange = StockApiService.getChangePercentage(a);
+      
 
       portfolioInformation
         .then((informationForportfolio) => {
@@ -56,10 +56,10 @@ class News extends React.Component<any, any> {
     return (
       <div>
         {this.state.dataWinners.map((stocks, indexNum) => (
-          <Link to={stocks.newsUrl}>
+          <Link to={stocks.newsUrl} key={indexNum}>
           <IonCard key={indexNum} color='light'>
             
-            <img src={stocks.newsImage}/>
+            <IonImg src={stocks.newsImage} />
             <IonCardHeader>
               <IonCardSubtitle>{stocks.newsSource}</IonCardSubtitle>
               <IonCardTitle><h3>{stocks.newsHeadlines}</h3></IonCardTitle>

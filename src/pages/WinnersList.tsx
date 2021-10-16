@@ -1,8 +1,13 @@
 import {
   IonBackButton,
   IonButtons,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
   IonContent,
   IonHeader,
+  IonItem,
+  IonLabel,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -21,26 +26,13 @@ class WinnersList extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    const time = (ms) => {
-      return new Promise((resolve, reject) => {
-        if (!this.state.isloading) {
-          setTimeout(resolve, ms);
-        } else {
-          reject(console.log("shop is closed"));
-        }
-      });
-    };
+    var loopPromise = new Promise<void>((resolve, reject) => {
+      this.state.stockTicker.forEach((a, index, array) => {
+        let portfolioInformation = StockApiService.getInformationForSorting(a);
+        // let percentageChange = StockApiService.getChangePercentage(a);
 
-    var winnerList = async () => {
-      try {
-       await time(1000);
-        
-        this.state.stockTicker.forEach((a) => {
-          let portfolioInformation =
-            StockApiService.getInformationForSorting(a);
-          // let percentageChange = StockApiService.getChangePercentage(a);
-
-          portfolioInformation.then((informationForportfolio) => {
+        portfolioInformation
+          .then((informationForportfolio) => {
             // array item has to enter this state
             this.setState(
               (prevState) => ({
@@ -49,25 +41,34 @@ class WinnersList extends React.Component<any, any> {
                   informationForportfolio,
                 ],
               }),
-              () => console.log(this.state.dataWinners)
+              () => {
+                console.log(this.state.dataWinners);
+              }
             );
+          })
+          .finally(() => {
+            if (index === array.length - 1) {
+              resolve();
+            }
           });
-        });
-
-        await time(2000);
-
-        this.state.dataWinners.sort((a, b) =>
-          a.changePercentage < b.changePercentage ? 1 : -1
-        );
-        console.log(this.state.dataWinners);
-      } catch (error) {
-        console.log(error);
-      } finally {
-      }
-    }
-
-    winnerList();
+      });
+    });
+    loopPromise.then(() => {
+      this.work();
+    });
   }
+
+  // console.log(data1[1].companyName, "des");
+  work = () => {
+    setTimeout(() => {
+      this.state.dataWinners.sort((a, b) =>
+        a.changePercentage < b.changePercentage ? 1 : -1
+      );
+
+      this.forceUpdate();
+    }, 2000);
+    console.log(this.state.dataWinners, "After sort");
+  };
 
   render() {
     return (
@@ -80,26 +81,26 @@ class WinnersList extends React.Component<any, any> {
               <IonBackButton defaultHref="/performancePage" />
             </IonButtons>
           </IonToolbar>
-          <div
-            style={{
-              padding: "16px",
-              backgroundColor: "lightblue",
-              margin: "12px",
-              color: "black",
-              borderRadius: "6px",
-              fontSize: "16pt",
-            }}
-          >
-            <div style={{ textAlign: "center" }}>
-              <div>
+
+          <div style={{ textAlign: "center" }}>
+            <IonCard>
+              <IonCardHeader><h1>Top winners of the day</h1></IonCardHeader>
+              <IonCardContent>
                 {this.state.dataWinners.map((stocks) => (
-                  <li key={stocks.companyName}>
-                    {stocks.ticker} {stocks.companyName}{" "}
-                    {stocks.changePercentage}
-                  </li>
+                  <IonCard>
+                    <IonItem key={stocks.companyName}>
+                      <IonLabel>
+                        <h2> {stocks.ticker}</h2> <h1>{stocks.companyName}</h1>{" "}
+                       
+                      </IonLabel>
+                      <IonLabel>
+                        <h1> {stocks.changePercentage}</h1>
+                      </IonLabel>
+                    </IonItem>
+                  </IonCard>
                 ))}
-              </div>
-            </div>
+              </IonCardContent>
+            </IonCard>
           </div>
         </IonContent>
       </IonPage>

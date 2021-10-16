@@ -14,7 +14,7 @@ class StockRow extends React.Component<any, any> {
   componentDidMount() {
     var loopPromise = new Promise<void>((resolve, reject) => {
       let portfolioInformation = StockApiService.getInformationForPortfolio(
-        this.props.stockInfo.selectedTicker
+        this.props.stockInfo.stockInfo.selectedTicker
       );
 
       portfolioInformation
@@ -36,8 +36,8 @@ class StockRow extends React.Component<any, any> {
   }
 
   addingStockInfoToPortfolioData = () => {
-    const cost = Number(this.props.stockInfo.enteredAmount);
-    const shares = Number(this.props.stockInfo.enteredShare);
+    const cost = Number(this.props.stockInfo.stockInfo.enteredAmount);
+    const shares = Number(this.props.stockInfo.stockInfo.enteredShare);
     const latestPrice = Number(this.state.portfolioData[0].latestPrice);
     let totalCost = cost * shares;
     let totalValue = latestPrice * shares;

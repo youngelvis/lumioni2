@@ -1,6 +1,11 @@
 import {
+  IonButton,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
   IonContent,
   IonHeader,
+  IonList,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -25,6 +30,7 @@ class List extends Component<any, any> {
       dataFromForm: "",
       tempData: "",
       portfolio: [],
+      visible:true,
     };
   }
   // function to get item from ListFiller component
@@ -111,14 +117,14 @@ class List extends Component<any, any> {
       });
   };
   componentDidMount = () => {
-    setTimeout(()=>this.getCurrentValue(),2000)
+    setTimeout(() => this.getCurrentValue(), 2000);
   };
 
   getCurrentValue = () => {
     console.log(this.props.appState.userData.portfolio);
 
     let currentValue;
-    this.props.appState.userData.portfolio.map((portfolioA) =>{
+    this.props.appState.userData.portfolio.map((portfolioA) => {
       console.log(portfolioA.enteredAmount);
 
       const latestPrice = StockApiService.getLatestPrice(
@@ -128,39 +134,33 @@ class List extends Component<any, any> {
         let latestprice = Number(latestP);
 
         console.log(latestprice);
-         currentValue = portfolioA.enteredShare * latestprice;
-         
-        //get the user Id
-    //   var uid = this.props.appState.firebaseUser.uid;
+        currentValue = portfolioA.enteredShare * latestprice;
 
-    //   var docRef = db.collection("userData").doc(uid);
-    //   docRef
-    //   .update({
-    //     portfolio: [{totalValue: currentValue}]
-    // })
-    //     .catch((error) => {
-    //       // The document probably doesn't exist.
-    //       console.error("Error updating document: ", error);
-    //     });
-        
+        //get the user Id
+        //   var uid = this.props.appState.firebaseUser.uid;
+
+        //   var docRef = db.collection("userData").doc(uid);
+        //   docRef
+        //   .set({
+        //     portfolio: [{'totalValue': currentValue}]
+        // },
+        // {merge:true})
+        //     .catch((error) => {
+        //       // The document probably doesn't exist.
+        //       console.error("Error updating document: ", error);
+        //     });
       });
-      
-      
     });
   };
 
-  //       let currentValue = portfolio.enteredShare * latestprice
-  //       portfolio.currentValue = currentValue;
-  //     });
-
-  //   });
-
   render() {
+    const buttonText = this.state.visible ? "hide form" :"Click here"
     if (this.props.appState.loggedIn == null) {
       return <div> loading </div>;
     } else if (this.props.appState.loggedIn === false) {
       return <Redirect to="/home"></Redirect>;
     } else {
+
       return (
         <IonPage>
           <IonHeader>
@@ -168,11 +168,11 @@ class List extends Component<any, any> {
               <IonTitle>portfolio page</IonTitle>
             </IonToolbar>
           </IonHeader>
-          <IonContent color="primary">
+          <IonContent >
             <div
               style={{
                 padding: "16px",
-                backgroundColor: "lightblue",
+              
                 margin: "12px",
                 color: "black",
                 borderRadius: "6px",
@@ -181,24 +181,37 @@ class List extends Component<any, any> {
             >
               <div style={{ textAlign: "center" }}>
                 <div>
-                  <ListFiller collectData={this.getInformationFromForm} />
+                  {this.state.visible ? <ListFiller collectData={this.getInformationFromForm} /> :'Add stock to portfolio'}
+                  <br></br>
+                  <IonButton color='primary' onClick={()=>{
+                    this.setState({visible:!this.state.visible})
+                  }}>{buttonText} </IonButton>
+                  
                   {/* <PortfolioSummary portfolioItems ={items}/> */}
-
-                  {this.props.appState.userData.portfolio
-                    ? this.props.appState.userData.portfolio.map(
-                        (item, indexNum) => (
-                          <div key={indexNum}>
-                            <ListItem
-                              key={indexNum}
-                              items={item}
-                              indexNum={indexNum}
-                              handleDelete={this.handleDelete}
-                            />
-                            <CurrentValue items={item} />
-                          </div>
-                        )
-                      )
-                    : "there are no items in the list"}
+                  <IonCard>
+                    <IonCardHeader>
+                      <IonCardTitle><h2> Portfolio List</h2></IonCardTitle>
+                    </IonCardHeader>
+                    <IonList>
+                     
+                      {this.props.appState.userData.portfolio
+                        ? this.props.appState.userData.portfolio.map(
+                            (item, indexNum) => (
+                              <div key={indexNum}>
+                                <ListItem
+                                  key={indexNum}
+                                  items={item}
+                                  indexNum={indexNum}
+                                  handleDelete={this.handleDelete}
+                                />
+                                <CurrentValue items={item} />
+                              </div>
+                            )
+                          )
+                        : "there are no items in the list"}
+                        
+                    </IonList>
+                  </IonCard>
                 </div>
 
                 <br />

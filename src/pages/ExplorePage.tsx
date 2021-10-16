@@ -7,6 +7,9 @@ import {
   IonList,
   IonItem,
   IonLabel,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
 } from "@ionic/react";
 import React from "react";
 import { Redirect } from "react-router";
@@ -59,23 +62,29 @@ class ExplorePage extends React.Component<any, any> {
             </IonToolbar>
           </IonHeader>
           <IonContent>
-          <IonList>
-                
-            {this.state.exploreList.map((item)=>(
-                  <IonItem>
-                   <IonLabel class="ion-text-justify"slot='start'>
-                     <h3>{item.ticker}</h3>
-                     <h2>{item.companyName}</h2>
-                   </IonLabel>
-                   <IonLabel class="ion-text-wrap" slot="end">
-                     <h2>{item.latestPrice}</h2>
-                   </IonLabel>
-                   </IonItem>
-               
-            ))}
-             
-               </IonList>
-           
+            <IonCard>
+              <IonCardHeader>
+                {" "}
+                <h2>Popular Stocks</h2>
+              </IonCardHeader>
+              <IonCardContent>
+                <IonList>
+                  {this.state.exploreList.map((item, indexNum) => (
+                    <IonCard>
+                    <IonItem key={indexNum}>
+                      <IonLabel class="ion-text-justify" slot="start">
+                        <h3>{item.ticker}</h3>
+                        <h2>{item.companyName}</h2>
+                      </IonLabel>
+                      <IonLabel class="ion-text-wrap ion-text-justify" slot="end">
+                        <h5>${item.latestPrice}</h5>
+                      </IonLabel>
+                    </IonItem>
+                    </IonCard>
+                  ))}
+                </IonList>
+              </IonCardContent>
+            </IonCard>
           </IonContent>
         </IonPage>
       );

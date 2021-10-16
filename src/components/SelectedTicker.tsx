@@ -28,7 +28,7 @@ const SelectedTicker = (props) => {
   return (
     <div>
       
-        <label>title</label>
+        <label>Stock ticker :</label>
 
         <input onChange={handleChange} list="stockTicker" type="text" />
       

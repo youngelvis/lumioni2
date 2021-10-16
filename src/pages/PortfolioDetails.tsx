@@ -23,7 +23,7 @@ class PortfolioDetails extends React.Component<any, any> {
         <IonToolbar>
           <IonTitle>portfolio details PAGE</IonTitle>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/list" />
+            <IonBackButton defaultHref="" />
           </IonButtons>
         </IonToolbar>
         <IonContent color="primary">
@@ -43,7 +43,7 @@ class PortfolioDetails extends React.Component<any, any> {
             StockGraph
                 <StockGraph selectedTicker= {match.params.ticker} />
                 portfolio info
-                <StockRow stockInfo= {history.location.state.stockInfo} />
+                <StockRow stockInfo = {location.state} />
                 business news
                 <News selectedTicker= {match.params.ticker}/>
             </div>

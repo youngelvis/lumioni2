@@ -1,5 +1,6 @@
 import { Redirect, Route } from "react-router-dom";
 import { Component } from "react";
+
 import {
   IonApp,
   IonContent,
@@ -10,6 +11,7 @@ import {
   IonTabs,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
+
 import Home from "./pages/Home";
 import List from "./pages/List";
 
@@ -39,6 +41,7 @@ import PerformancePage from "./pages/PerformancePage";
 import WinnersList from "./pages/WinnersList";
 import LosersList from "./pages/LosersList";
 import PortfolioDetails from "./pages/PortfolioDetails";
+
 
 class App extends Component<any, any> {
   constructor(props: any) {
@@ -105,6 +108,7 @@ class App extends Component<any, any> {
           firstName: this.state.signUpData.firstName,
           lastName: this.state.signUpData.lastName,
           portfolio: [],
+          totalValue: '',
         })
         .then(() => {
           console.log("userData added to database");
@@ -135,23 +139,23 @@ class App extends Component<any, any> {
     return (
       <IonApp>
         <IonContent>
-          <IonReactRouter>
+          <IonReactRouter >
             <IonTabs>
               <IonRouterOutlet>
-               
+    
                 <Route exact path="/home">
                   <Home
                     onSavesignUpData={this.saveSignUpData}
                     appState={this.state}
                   />
                 </Route>
-                <Route exact path="/list">
+                <Route exact path="/list" component={List}>
                   <List appState={this.state} />
                 </Route>
                 <Route exact path="/signin">
                   <SignIn />
                 </Route>
-                <Route exact path="/performancePage">
+                <Route exact path="/performancePage" component={PerformancePage}>
                   <PerformancePage appState={this.state} />
                 </Route>
                 <Route exact path="/signUp">
@@ -170,6 +174,7 @@ class App extends Component<any, any> {
                 <Route exact path="/">
                   <Redirect to="/home" />
                 </Route>
+             
                 
               </IonRouterOutlet>
 

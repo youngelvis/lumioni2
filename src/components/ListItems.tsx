@@ -1,4 +1,12 @@
-import { IonIcon } from "@ionic/react";
+import {
+  IonCard,
+  IonIcon,
+  IonItem,
+  IonItemOption,
+  IonItemOptions,
+  IonItemSliding,
+  IonLabel,
+} from "@ionic/react";
 import { trash } from "ionicons/icons";
 
 import { Component } from "react";
@@ -8,49 +16,48 @@ class ListItem extends Component<any, any> {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(props: any) {
     super(props);
-    this.state = {
-    
-    };
+    this.state = {};
   }
   // refresh=()=>{
   //   this.forceUpdate()
   // }
   componentDidMount = () => {
-   
-    // const companyName = StockApiService.getCompanyName(
-    //   this.props.items.selectedTicker
-    // );
-    // companyName.then((companyName)=>{
-    //     this.setState({
-    //         companyName: companyName,
-    //       });
-    // })
-    
     
   };
-
+  deleteItem =()=>{
+    this.props.handleDelete(this.props.indexNum);
+  }
 
   render() {
     return (
-      <div>
-        <Link
-          to={{
-            pathname: `/portfolioDetails/${this.props.items.selectedTicker}`,
-            state: { stockInfo: this.props.items },
-          }}
-        >
-          {this.props.items.selectedTicker} {this.props.items.companyName}       
-        </Link>
-        <IonIcon
-          onClick={() => {
-            this.props.handleDelete(this.props.indexNum)
-            // this.refresh()
-          }}
-          icon={trash}
-        ></IonIcon>
-        <br></br>
-        Total Cost: ${this.props.items.totalCost}
-      </div>
+      <IonCard>
+      <IonItemSliding>
+        <IonItem>
+          <IonLabel slot="start">
+            <Link
+              to={{
+                pathname: `/portfolioDetails/${this.props.items.selectedTicker}`,
+                state: { stockInfo: this.props.items },
+              }}
+            >
+              <h3>{this.props.items.selectedTicker} </h3>
+              <h1>{this.props.items.companyName}</h1>
+            </Link>
+          </IonLabel>
+
+          
+          <IonLabel slot='end' class="ion-text-wrap">${this.props.items.totalCost}</IonLabel>
+        </IonItem>
+        <IonItemOptions side='end'>
+            <IonItemOption
+              onClick={this.deleteItem}
+            >
+              <IonIcon icon={trash}></IonIcon>
+            </IonItemOption>
+          </IonItemOptions>
+          <br></br>
+      </IonItemSliding>
+      </IonCard>
     );
   }
 }

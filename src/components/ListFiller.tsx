@@ -2,6 +2,7 @@ import { Component } from "react";
 import SelectedTicker from "./SelectedTicker";
 
 import StockApiService from "../services/StockApiService";
+import { IonCard, IonCardContent, IonCardTitle } from "@ionic/react";
 
 class ListFiller extends Component<any, any> {
   constructor(props) {
@@ -40,7 +41,7 @@ class ListFiller extends Component<any, any> {
 
   }
   // used to collect the data stored in the state
-  handleAdd = () => {
+  handleAdd = (e) => {
     // this.props.onListState(this.state);
 
   
@@ -53,15 +54,15 @@ class ListFiller extends Component<any, any> {
         this.setState({totalCost: this.state.enteredShare * this.state.enteredAmount})
         this.props.collectData(this.state)
     })
-
     
 
   };
   
   render() {
     return (
-      <div>
-       
+      <IonCard>
+        <IonCardTitle> Enter Stock details</IonCardTitle>
+       <IonCardContent>
         <SelectedTicker onTakeTicker ={this.collectStockTicker} />
         <div>
           <label>no of shares</label>
@@ -71,7 +72,7 @@ class ListFiller extends Component<any, any> {
             step="0.01"
             onChange={this.handleChange}
             id="enteredShare"
-            value={this.state.enteredShare}
+            
           />
         </div>
         <div>
@@ -86,7 +87,7 @@ class ListFiller extends Component<any, any> {
           />
         </div>
         <div>
-          <label>date</label>
+          <label>Transaction Date</label>
           <input
             type="date"
             min="2000-01-01"
@@ -100,7 +101,8 @@ class ListFiller extends Component<any, any> {
           <br />
           <button onClick={this.handleAdd}> add </button>
         </div>
-      </div>
+        </IonCardContent>
+      </IonCard>
     );
   }
 }
