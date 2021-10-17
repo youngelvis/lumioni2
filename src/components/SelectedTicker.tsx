@@ -27,13 +27,16 @@ const SelectedTicker = (props) => {
   };
   return (
     <div>
-      
-        <label>Stock ticker :</label>
+      <label>Stock ticker :</label>
 
-        <input onChange={handleChange} list="stockTicker" type="text" />
-      
+      <input
+        onChange={handleChange}
+        value={props.selectedTicker}
+        list="stockTicker"
+        type="text"
+      />
 
-      <datalist id= "stockTicker">
+      <datalist id="stockTicker">
         {stockTicker.map((item, indexNum) => (
           <option key={indexNum}>{item}</option>
         ))}

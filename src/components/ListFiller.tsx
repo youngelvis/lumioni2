@@ -53,9 +53,18 @@ class ListFiller extends Component<any, any> {
         this.setState({companyName: companyName});
         this.setState({totalCost: this.state.enteredShare * this.state.enteredAmount})
         this.props.collectData(this.state)
+      
     })
     
-
+  setTimeout(() => 
+  {  this.setState({
+      selectedTicker: "",
+      enteredShare: "",
+      enteredAmount: "",
+      enteredDate: "",
+      companyName: "",
+     
+    })}, 2000)
   };
   
   render() {
@@ -63,7 +72,7 @@ class ListFiller extends Component<any, any> {
       <IonCard>
         <IonCardTitle> Enter Stock details</IonCardTitle>
        <IonCardContent>
-        <SelectedTicker onTakeTicker ={this.collectStockTicker} />
+        <SelectedTicker onTakeTicker ={this.collectStockTicker} selectedTicker={this.state.selectedTicker}/>
         <div>
           <label>no of shares</label>
           <input
@@ -72,6 +81,7 @@ class ListFiller extends Component<any, any> {
             step="0.01"
             onChange={this.handleChange}
             id="enteredShare"
+            value={this.state.enteredShare}
             
           />
         </div>
