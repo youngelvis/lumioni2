@@ -70,8 +70,8 @@ class ExplorePage extends React.Component<any, any> {
               <IonCardContent>
                 <IonList>
                   {this.state.exploreList.map((item, indexNum) => (
-                    <IonCard>
-                    <IonItem key={indexNum}>
+                    <IonCard key={indexNum}>
+                    <IonItem >
                       <IonLabel class="ion-text-justify" slot="start">
                         <h3>{item.ticker}</h3>
                         <h2>{item.companyName}</h2>

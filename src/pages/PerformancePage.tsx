@@ -12,7 +12,7 @@ import { Component } from "react";
 import "./all.css";
 
 import { Redirect } from "react-router";
-import WinnersList from "./WinnersList";
+
 
 
 class PerformancePage extends Component<any, any> {
@@ -51,7 +51,7 @@ class PerformancePage extends Component<any, any> {
                 fontSize: "16pt",
               }}
             >
-                <div><IonButton color='success' routerLink= "/winnerPage"></IonButton></div>
+                <div><IonButton color='success' routerLink= "/winnerPage"> winner list</IonButton></div>
                 <div><IonButton color='danger' routerLink= "/losersPage">losers List</IonButton></div>
             </div>
 

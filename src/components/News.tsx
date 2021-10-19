@@ -56,7 +56,7 @@ class News extends React.Component<any, any> {
     return (
       <div>
         {this.state.dataWinners.map((stocks, indexNum) => (
-          <Link to={stocks.newsUrl} key={indexNum}>
+          <Link to={{pathname:stocks.newsUrl}} target ="_blank"key={indexNum} style ={{textDecoration: 'none'}}>
           <IonCard key={indexNum} color='light'>
             
             <IonImg src={stocks.newsImage} />

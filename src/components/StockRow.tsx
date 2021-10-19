@@ -6,8 +6,8 @@ class StockRow extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      portfolioData: [],
-      stockInfo: [],
+      portfolioData: {},
+      calculation: {}
     };
   }
 
@@ -21,10 +21,7 @@ class StockRow extends React.Component<any, any> {
         .then((informationForportfolio) => {
           // array item has to enter this state
           this.setState((prevState) => ({
-            portfolioData: [
-              ...prevState.portfolioData,
-              informationForportfolio,
-            ],
+            portfolioData: informationForportfolio,
           }));
         })
         .finally(() => {
@@ -38,7 +35,8 @@ class StockRow extends React.Component<any, any> {
   addingStockInfoToPortfolioData = () => {
     const cost = Number(this.props.stockInfo.stockInfo.enteredAmount);
     const shares = Number(this.props.stockInfo.stockInfo.enteredShare);
-    const latestPrice = Number(this.state.portfolioData[0].latestPrice);
+    const latestPrice = Number(this.state.portfolioData.latestPrice);
+    console.log(latestPrice)
     let totalCost = cost * shares;
     let totalValue = latestPrice * shares;
     let portfolioValue = totalValue - totalCost;
@@ -51,22 +49,21 @@ class StockRow extends React.Component<any, any> {
     };
     // pushing this to the stockInfo in the state
     this.setState((prevState) => ({
-      stockInfo: [
-        ...prevState.stockInfo,
-        calculation
-      ],
+      calculation:calculation,
     }));
-    console.log(this.state.stockInfo)
   };
 
   render() {
+    var stocks = this.state.portfolioData
+    var calculation = this.state.calculation
     return (
       <div>
-        {this.state.portfolioData.map((stocks) => (
-          <div key={stocks.companyName}>
+        
+          <div >
             {stocks.companyName} {stocks.latestTime}
+            {calculation.totalCost}
           </div>
-        ))}
+       
       </div>
     );
   }

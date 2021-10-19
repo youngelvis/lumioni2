@@ -21,42 +21,43 @@ class ListItem extends Component<any, any> {
   // refresh=()=>{
   //   this.forceUpdate()
   // }
-  componentDidMount = () => {
-    
-  };
-  deleteItem =()=>{
+  componentDidMount = () => {};
+  deleteItem = () => {
     this.props.handleDelete(this.props.indexNum);
-  }
+  };
 
   render() {
     return (
       <IonCard>
-      <IonItemSliding>
-        <IonItem>
-          <IonLabel slot="start">
+        <IonItemSliding>
+          <IonItem>
+          
+            <IonLabel slot="start">
             <Link
               to={{
                 pathname: `/portfolioDetails/${this.props.items.selectedTicker}`,
                 state: { stockInfo: this.props.items },
               }}
+              style={{ color:'black', textDecoration: 'none'}}
             >
-              <h3>{this.props.items.selectedTicker} </h3>
-              <h1>{this.props.items.companyName}</h1>
-            </Link>
-          </IonLabel>
+              <h2>{this.props.items.selectedTicker} </h2>
+              <h3>{this.props.items.companyName}</h3>
+              </Link>
+            </IonLabel>
+           
 
-          
-          <IonLabel slot='end' class="ion-text-wrap">${this.props.items.totalCost}</IonLabel>
-        </IonItem>
-        <IonItemOptions side='end'>
-            <IonItemOption
-              onClick={this.deleteItem}
-            >
+            <IonLabel slot="end"class="ion-text-wrap">
+              ${this.props.items.totalCost}
+            </IonLabel>
+          </IonItem>
+          <IonItemOptions side="end">
+            <IonItemOption onClick={this.deleteItem}>
               <IonIcon icon={trash}></IonIcon>
             </IonItemOption>
           </IonItemOptions>
+          
           <br></br>
-      </IonItemSliding>
+        </IonItemSliding>
       </IonCard>
     );
   }
