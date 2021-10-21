@@ -14,11 +14,12 @@ class PortfolioSummary extends React.Component<any, any> {
   componentDidMount = () => {
     setTimeout(() => {
       this.totalValueForPortfolio();
-    }, 500);
+    }, 1000);
   };
   totalValueForPortfolio = () => {
     let totalValue = 0;
     let totalCost = 0;
+    // eslint-disable-next-line array-callback-return
     this.props.portfolioItems.map((items) => {
       const latestPrice = StockApiService.getLatestPrice(items.selectedTicker);
       latestPrice.then((latestP) => {
@@ -26,27 +27,31 @@ class PortfolioSummary extends React.Component<any, any> {
 
         let cost = Number(items.enteredShare) * Number(items.enteredAmount);
         totalCost += cost;
-        console.log(totalCost);
+
         let value = Number(items.enteredShare) * latestprice;
-        totalValue += value;
+        totalValue += Number(value);
       });
     });
 
     setTimeout(() => {
-      let PercentageChange = (totalCost / totalValue) * 100;
+      let PercentageChange = ((totalCost / totalValue) * 100).toFixed(2);
+      let TV = totalValue.toFixed(2);
+      let TC = totalCost.toFixed(2);
       this.setState({
-        portfolioCost: totalCost,
-        portfolioValue: totalValue,
+        portfolioCost: TC,
+        portfolioValue: TV,
         portfolioPercentageChange: PercentageChange,
       });
     }, 1000);
   };
   render() {
-    return <IonCard>
-                <p>{this.state.portfolioCost}</p>
-                <p>{this.state.portfolioValue}</p>
-                <p>{this.state.portfolioPercentageChange}</p>
-         </IonCard>;
+    return (
+      <IonCard>
+        <p>{this.state.portfolioCost}</p>
+        <p>{this.state.portfolioValue}</p>
+        <p>{this.state.portfolioPercentageChange}</p>
+      </IonCard>
+    );
   }
 }
 export default PortfolioSummary;

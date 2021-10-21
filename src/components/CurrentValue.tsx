@@ -6,7 +6,6 @@ class CurrentValue extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      latestPrice: "",
       stockInfo: "",
     };
   }
@@ -15,31 +14,35 @@ class CurrentValue extends React.Component<any, any> {
       this.props.items.selectedTicker
     );
     latestPrice.then((latestP) => {
-      let latestprice = Number(latestP)
-      this.setState({
-        latestPrice: latestprice
-      });
+      let latestprice = Number(latestP);
+      console.log(latestprice)
       this.businessLogic(latestprice);
+      
     });
-    
-    
   };
   businessLogic = (number) => {
     const cost = Number(this.props.items.enteredAmount);
     const shares = Number(this.props.items.enteredShare);
 
     let totalCost = cost * shares;
-    let totalValue = Number(this.state.latestPrice) * shares;
-    let difference =   totalValue - totalCost ;
-    let percentageChange = (totalCost / totalValue) * 100;
+    let totalValue = number * shares;
+    let difference = Number(totalValue) - Number(totalCost);
+    let percentageChange = 
+      (Number(totalCost) / Number(totalValue)) *
+      100
+    ;
+    let TC = totalCost.toFixed(2);
+    let TV = totalValue.toFixed(2);
+    let D = difference.toFixed(2);
+    let PC = percentageChange.toFixed(2)
     let calculation = {
-      totalCost,
-      difference,
-      percentageChange,
-      totalValue,
+      totalCost: TC,
+      difference:D,
+      percentageChange:PC,
+      totalValue:TV,
     };
 
-    console.log(totalValue)
+    console.log(totalValue);
     this.setState({
       stockInfo: calculation,
     });
@@ -48,9 +51,9 @@ class CurrentValue extends React.Component<any, any> {
   render() {
     return (
       <div>
-        total cost: {this.state.stockInfo.totalCost} 
-        current value: {this.state.stockInfo.totalValue}
-        cost difference: {this.state.stockInfo.difference}
+        <p>total cost: {this.state.stockInfo.totalCost}</p>
+        <p>current value: {this.state.stockInfo.totalValue}</p>
+        <p>cost difference: {this.state.stockInfo.difference}</p>
       </div>
     );
   }

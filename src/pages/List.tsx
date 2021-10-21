@@ -182,7 +182,7 @@ class List extends Component<any, any> {
                                   indexNum={indexNum}
                                   handleDelete={this.handleDelete}
                                 />
-                                <CurrentValue items={item} />
+                                {/* <CurrentValue items={item} /> */}
                               </div>
                             )
                           )

@@ -11,6 +11,8 @@ import { trash } from "ionicons/icons";
 
 import { Component } from "react";
 import { Link } from "react-router-dom";
+import CurrentValue from "./CurrentValue";
+import '../pages/all.css'
 
 class ListItem extends Component<any, any> {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
@@ -28,11 +30,11 @@ class ListItem extends Component<any, any> {
 
   render() {
     return (
-      <IonCard>
+      <IonCard >
         <IonItemSliding>
-          <IonItem>
+          <IonItem className='item'>
           
-            <IonLabel slot="start">
+            <IonLabel slot="start"  >
             <Link
               to={{
                 pathname: `/portfolioDetails/${this.props.items.selectedTicker}`,
@@ -44,12 +46,9 @@ class ListItem extends Component<any, any> {
               <h3>{this.props.items.companyName}</h3>
               </Link>
             </IonLabel>
-           
-
-            <IonLabel slot="end"class="ion-text-wrap">
-              ${this.props.items.totalCost}
-            </IonLabel>
+            
           </IonItem>
+          <CurrentValue items ={this.props.items} />
           <IonItemOptions side="end">
             <IonItemOption onClick={this.deleteItem}>
               <IonIcon icon={trash}></IonIcon>
