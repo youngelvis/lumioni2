@@ -19,7 +19,8 @@ import ListFiller from "../components/ListFiller";
 
 import ListItem from "../components/ListItems";
 import CurrentValue from "../components/CurrentValue";
-import StockApiService from "../services/StockApiService";
+import PortfolioSummary from "../components/PortfolioSummary";
+
 
 // import StockGraph from "../components/StockGraph";
 
@@ -56,7 +57,7 @@ class List extends Component<any, any> {
     // currentStocks.splice(indexNum, 1);
     this.props.appState.userData.portfolio.splice(indexNum, 1);
 
-    this.setState({ tempData: "gsfsf" });
+
     //get the user Id
     var uid = this.props.appState.firebaseUser.uid;
     // access the document in the database
@@ -75,7 +76,10 @@ class List extends Component<any, any> {
         console.error("Error updating document: ", error);
       });
     // to force the application to render again
-    // this.forceUpdate();
+    
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
   // function to add item from the state
   handleAdd = () => {
@@ -101,7 +105,12 @@ class List extends Component<any, any> {
       });
 
     // to force the application to render again
-    this.forceUpdate();
+    // this.forceUpdate()
+    
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+    
   };
 
   handleSignOut = () => {
@@ -117,41 +126,10 @@ class List extends Component<any, any> {
       });
   };
   componentDidMount = () => {
-    setTimeout(() => this.getCurrentValue(), 2000);
+   
   };
 
-  getCurrentValue = () => {
-    console.log(this.props.appState.userData.portfolio);
-
-    let currentValue;
-    this.props.appState.userData.portfolio.map((portfolioA) => {
-      console.log(portfolioA.enteredAmount);
-
-      const latestPrice = StockApiService.getLatestPrice(
-        portfolioA.selectedTicker
-      );
-      latestPrice.then((latestP) => {
-        let latestprice = Number(latestP);
-
-        console.log(latestprice);
-        currentValue = portfolioA.enteredShare * latestprice;
-
-        //get the user Id
-        //   var uid = this.props.appState.firebaseUser.uid;
-
-        //   var docRef = db.collection("userData").doc(uid);
-        //   docRef
-        //   .set({
-        //     portfolio: [{'totalValue': currentValue}]
-        // },
-        // {merge:true})
-        //     .catch((error) => {
-        //       // The document probably doesn't exist.
-        //       console.error("Error updating document: ", error);
-        //     });
-      });
-    });
-  };
+  
 
   render() {
     const buttonText = this.state.visible ? "hide form" :"Click here"
@@ -187,7 +165,7 @@ class List extends Component<any, any> {
                     this.setState({visible:!this.state.visible})
                   }}>{buttonText} </IonButton>
                   
-                  {/* <PortfolioSummary portfolioItems ={items}/> */}
+                 <PortfolioSummary portfolioItems = {this.props.appState.userData.portfolio}/>
                   <IonCard>
                     <IonCardHeader>
                       <IonCardTitle><h2> Portfolio List</h2></IonCardTitle>

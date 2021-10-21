@@ -4,7 +4,7 @@ import Plot from "react-plotly.js";
 function StockGraph(props) {
   const [stockChartXValues, SetstockChartXValues] = useState([]);
   const [stockChartYValues, SetstockChartyValues] = useState([]);
-  const [stockSymbol, SetstockSymbol] = useState("aapl");
+  const [stockSymbol, SetstockSymbol] = useState("");
   useEffect(() => {
     function fetchStock() {
       //we create a const to hold the api key
@@ -32,7 +32,7 @@ function StockGraph(props) {
           // the keys are the dates
 
           for (var key in data["Time Series (Daily)"]) {
-            // console.log(key);
+            
             //we push in the date
             stockChartXValuesFunction.push(key);
 

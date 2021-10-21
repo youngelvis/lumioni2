@@ -16,7 +16,7 @@ class News extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      dataWinners: [],
+      NewsContainer: [],
     };
   }
 
@@ -32,7 +32,7 @@ class News extends React.Component<any, any> {
           // eslint-disable-next-line array-callback-return
           informationForportfolio.map((items) => {
             this.setState((prevState) => ({
-              dataWinners: [...prevState.dataWinners, items],
+              NewsContainer: [...prevState.NewsContainer, items],
             }));
           });
 
@@ -46,7 +46,7 @@ class News extends React.Component<any, any> {
     });
 
     loopPromise.then(() => {
-      console.log(this.state.dataWinners, "After sort");
+      //
     });
   }
 
@@ -55,7 +55,7 @@ class News extends React.Component<any, any> {
   render() {
     return (
       <div>
-        {this.state.dataWinners.map((stocks, indexNum) => (
+        {this.state.NewsContainer.map((stocks, indexNum) => (
           <Link to={{pathname:stocks.newsUrl}} target ="_blank"key={indexNum} style ={{textDecoration: 'none'}}>
           <IonCard key={indexNum} color='light'>
             

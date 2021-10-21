@@ -42,7 +42,6 @@ import WinnersList from "./pages/WinnersList";
 import LosersList from "./pages/LosersList";
 import PortfolioDetails from "./pages/PortfolioDetails";
 
-
 class App extends Component<any, any> {
   constructor(props: any) {
     super(props);
@@ -108,7 +107,6 @@ class App extends Component<any, any> {
           firstName: this.state.signUpData.firstName,
           lastName: this.state.signUpData.lastName,
           portfolio: [],
-          totalValue: '',
         })
         .then(() => {
           console.log("userData added to database");
@@ -139,10 +137,9 @@ class App extends Component<any, any> {
     return (
       <IonApp>
         <IonContent>
-          <IonReactRouter >
+          <IonReactRouter>
             <IonTabs>
               <IonRouterOutlet>
-    
                 <Route exact path="/home">
                   <Home
                     onSavesignUpData={this.saveSignUpData}
@@ -155,7 +152,11 @@ class App extends Component<any, any> {
                 <Route exact path="/signin">
                   <SignIn />
                 </Route>
-                <Route exact path="/performancePage" component={PerformancePage}>
+                <Route
+                  exact
+                  path="/performancePage"
+                  component={PerformancePage}
+                >
                   <PerformancePage appState={this.state} />
                 </Route>
                 <Route exact path="/signUp">
@@ -167,15 +168,17 @@ class App extends Component<any, any> {
                 <Route exact path="/winnerPage">
                   <WinnersList />
                 </Route>
-                <Route exact path="/portfolioDetails/:ticker" component={PortfolioDetails}/>
+                <Route
+                  exact
+                  path="/portfolioDetails/:ticker"
+                  component={PortfolioDetails}
+                />
                 <Route exact path="/losersPage">
                   <LosersList />
                 </Route>
                 <Route exact path="/">
                   <Redirect to="/home" />
                 </Route>
-             
-                
               </IonRouterOutlet>
 
               <IonTabBar slot="bottom">
@@ -188,16 +191,8 @@ class App extends Component<any, any> {
                 <IonTabButton tab="performance page" href="/performancePage">
                   <IonLabel>Performance page</IonLabel>
                 </IonTabButton>
-                
               </IonTabBar>
-              
-
-           
-           
-            
-            
             </IonTabs>
-            
           </IonReactRouter>
         </IonContent>
       </IonApp>

@@ -64,7 +64,7 @@ class ListFiller extends Component<any, any> {
       enteredDate: "",
       companyName: "",
      
-    })}, 2000)
+    })}, 500)
   };
   
   render() {

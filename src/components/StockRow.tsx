@@ -19,24 +19,23 @@ class StockRow extends React.Component<any, any> {
 
       portfolioInformation
         .then((informationForportfolio) => {
-          // array item has to enter this state
+          // object item has to enter this state
           this.setState((prevState) => ({
             portfolioData: informationForportfolio,
           }));
         })
         .finally(() => {
-          this.addingStockInfoToPortfolioData();
+          this.addingStockInfoToCalculationsObject();
         });
     });
 
     loopPromise.then(() => {});
   }
 
-  addingStockInfoToPortfolioData = () => {
+  addingStockInfoToCalculationsObject = () => {
     const cost = Number(this.props.stockInfo.stockInfo.enteredAmount);
     const shares = Number(this.props.stockInfo.stockInfo.enteredShare);
     const latestPrice = Number(this.state.portfolioData.latestPrice);
-    console.log(latestPrice)
     let totalCost = cost * shares;
     let totalValue = latestPrice * shares;
     let portfolioValue = totalValue - totalCost;
@@ -48,9 +47,11 @@ class StockRow extends React.Component<any, any> {
       totalValue,
     };
     // pushing this to the stockInfo in the state
-    this.setState((prevState) => ({
+    this.setState(
+      {
       calculation:calculation,
-    }));
+    }
+    );
   };
 
   render() {
