@@ -1,15 +1,16 @@
 import {
-  IonButton,
   IonCard,
   IonCardHeader,
   IonCardTitle,
   IonContent,
   IonHeader,
+  IonIcon,
   IonList,
   IonPage,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+
 import { Component } from "react";
 
 import "./all.css";
@@ -18,9 +19,9 @@ import { Redirect } from "react-router";
 import ListFiller from "../components/ListFiller";
 
 import ListItem from "../components/ListItems";
-import CurrentValue from "../components/CurrentValue";
-import PortfolioSummary from "../components/PortfolioSummary";
 
+import PortfolioSummary from "../components/PortfolioSummary";
+import { arrowDown, arrowUp } from "ionicons/icons";
 
 // import StockGraph from "../components/StockGraph";
 
@@ -31,7 +32,7 @@ class List extends Component<any, any> {
       dataFromForm: "",
       tempData: "",
       portfolio: [],
-      visible:true,
+      visible: false,
     };
   }
   // function to get item from ListFiller component
@@ -57,7 +58,6 @@ class List extends Component<any, any> {
     // currentStocks.splice(indexNum, 1);
     this.props.appState.userData.portfolio.splice(indexNum, 1);
 
-
     //get the user Id
     var uid = this.props.appState.firebaseUser.uid;
     // access the document in the database
@@ -76,7 +76,7 @@ class List extends Component<any, any> {
         console.error("Error updating document: ", error);
       });
     // to force the application to render again
-    
+
     setTimeout(() => {
       window.location.reload();
     }, 500);
@@ -106,11 +106,10 @@ class List extends Component<any, any> {
 
     // to force the application to render again
     // this.forceUpdate()
-    
+
     setTimeout(() => {
       window.location.reload();
     }, 500);
-    
   };
 
   handleSignOut = () => {
@@ -125,20 +124,15 @@ class List extends Component<any, any> {
         console.log(error);
       });
   };
-  componentDidMount = () => {
-   
-  };
-
-  
+  componentDidMount = () => {};
 
   render() {
-    const buttonText = this.state.visible ? "hide form" :"Click here"
+    const buttonText = this.state.visible ?`${arrowUp}` : `${arrowDown}`;
     if (this.props.appState.loggedIn == null) {
       return <div> loading </div>;
     } else if (this.props.appState.loggedIn === false) {
       return <Redirect to="/home"></Redirect>;
     } else {
-
       return (
         <IonPage>
           <IonHeader>
@@ -146,11 +140,11 @@ class List extends Component<any, any> {
               <IonTitle>portfolio page</IonTitle>
             </IonToolbar>
           </IonHeader>
-          <IonContent >
+          <IonContent>
             <div
               style={{
                 padding: "16px",
-              
+
                 margin: "12px",
                 color: "black",
                 borderRadius: "6px",
@@ -159,19 +153,33 @@ class List extends Component<any, any> {
             >
               <div style={{ textAlign: "center" }}>
                 <div>
-                  {this.state.visible ? <ListFiller collectData={this.getInformationFromForm} /> :'Add stock to portfolio'}
-                  <br></br>
-                  <IonButton color='primary' onClick={()=>{
-                    this.setState({visible:!this.state.visible})
-                  }}>{buttonText} </IonButton>
+                  {this.state.visible ? (
+                    <ListFiller collectData={this.getInformationFromForm} />
+                  ) : (
+                    "Add stock to portfolio   "
+                  )}
                   
-                 <PortfolioSummary portfolioItems = {this.props.appState.userData.portfolio}/>
+                  <IonIcon
+                   icon={buttonText}
+                    color="primary"
+                    
+                    onClick={() => {
+                      this.setState({ visible: !this.state.visible });
+                    }}
+                  >
+                    
+                  </IonIcon>
+
+                  <PortfolioSummary
+                    portfolioItems={this.props.appState.userData.portfolio}
+                  />
                   <IonCard>
                     <IonCardHeader>
-                      <IonCardTitle><h2> Portfolio List</h2></IonCardTitle>
+                      <IonCardTitle>
+                        <h2> Portfolio List</h2>
+                      </IonCardTitle>
                     </IonCardHeader>
                     <IonList>
-                     
                       {this.props.appState.userData.portfolio
                         ? this.props.appState.userData.portfolio.map(
                             (item, indexNum) => (
@@ -182,12 +190,10 @@ class List extends Component<any, any> {
                                   indexNum={indexNum}
                                   handleDelete={this.handleDelete}
                                 />
-                                {/* <CurrentValue items={item} /> */}
                               </div>
                             )
                           )
                         : "there are no items in the list"}
-                        
                     </IonList>
                   </IonCard>
                 </div>

@@ -1,4 +1,4 @@
-import { IonCard } from "@ionic/react";
+import { IonCard, IonCardContent, IonCardHeader } from "@ionic/react";
 import React from "react";
 import StockApiService from "../services/StockApiService";
 
@@ -14,7 +14,7 @@ class PortfolioSummary extends React.Component<any, any> {
   componentDidMount = () => {
     setTimeout(() => {
       this.totalValueForPortfolio();
-    }, 1000);
+    }, 1500);
   };
   totalValueForPortfolio = () => {
     let totalValue = 0;
@@ -34,7 +34,7 @@ class PortfolioSummary extends React.Component<any, any> {
     });
 
     setTimeout(() => {
-      let PercentageChange = ((totalCost / totalValue) * 100).toFixed(2);
+      let PercentageChange = ((( totalValue - totalCost)/totalCost) * 100).toFixed(2);
       let TV = totalValue.toFixed(2);
       let TC = totalCost.toFixed(2);
       this.setState({
@@ -47,9 +47,12 @@ class PortfolioSummary extends React.Component<any, any> {
   render() {
     return (
       <IonCard>
-        <p>{this.state.portfolioCost}</p>
-        <p>{this.state.portfolioValue}</p>
-        <p>{this.state.portfolioPercentageChange}</p>
+        <IonCardHeader> <h1>Portfolio Summary</h1></IonCardHeader>
+        <IonCardContent>
+          <p>portfolio cost: ${this.state.portfolioCost}</p>
+          <p>portfolio current Value: ${this.state.portfolioValue}</p>
+          <p>portfolio perfomance: {this.state.portfolioPercentageChange}%</p>
+        </IonCardContent>
       </IonCard>
     );
   }

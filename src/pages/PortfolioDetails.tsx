@@ -5,7 +5,6 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
- 
 } from "@ionic/react";
 
 import React from "react";
@@ -14,10 +13,9 @@ import StockGraph from "../components/StockGraph";
 import StockRow from "../components/StockRow";
 
 class PortfolioDetails extends React.Component<any, any> {
-
   render() {
-    const { match, location, history } = this.props
-    console.log(this.props, "elvis")
+    const { match, location, history } = this.props;
+    console.log(this.props, "elvis");
     return (
       <IonPage>
         <IonToolbar>
@@ -26,11 +24,11 @@ class PortfolioDetails extends React.Component<any, any> {
             <IonBackButton defaultHref="" />
           </IonButtons>
         </IonToolbar>
-        <IonContent color="primary">
+        <IonContent >
           <div
             style={{
               padding: "16px",
-              backgroundColor: "lightblue",
+
               margin: "12px",
               color: "black",
               borderRadius: "6px",
@@ -41,14 +39,13 @@ class PortfolioDetails extends React.Component<any, any> {
               <div></div>
             </div>
             StockGraph
-                <StockGraph selectedTicker= {match.params.ticker} />
-                portfolio info
-                <StockRow stockInfo = {location.state} />
-                business news
-                <News selectedTicker= {match.params.ticker}/>
-            </div>
-            </IonContent>
-
+            <StockGraph selectedTicker={match.params.ticker} />
+            portfolio info
+            <StockRow stockInfo={location.state} />
+            business news
+            <News selectedTicker={match.params.ticker} />
+          </div>
+        </IonContent>
       </IonPage>
     );
   }

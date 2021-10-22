@@ -61,11 +61,19 @@ function StockGraph(props) {
                 x: stockChartXValues,
                 y: stockChartYValues,
                 type: "scatter",
-                mode: "lines+markers",
+                mode: "lines",
                 marker: { color: "red" },
               },
             ]}
-            layout={{ autosize: true, title: stockSymbol }}
+            layout={{ width: 350,height: 400,
+            margin: {
+              l: 50,
+              r: 50,
+              b: 100,
+              t: 100,
+              pad: 4
+            },paper_bgcolor: "",
+            plot_bgcolor: '', title: stockSymbol }}
           />
        
       

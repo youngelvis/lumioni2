@@ -82,8 +82,8 @@ class LosersList extends React.Component<any, any> {
             <IonCardHeader><h1>Top losers of the day</h1></IonCardHeader>
               <IonCardContent>
                 {this.state.datalosers.map((stocks) => (
-                  <IonCard>
-                    <IonItem key={stocks.companyName}>
+                  <IonCard key={stocks.companyName}>
+                    <IonItem >
                       <IonLabel>
                         <h2> {stocks.ticker}</h2> <h1>{stocks.companyName}</h1>{" "}
                       </IonLabel>
