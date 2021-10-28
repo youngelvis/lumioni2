@@ -40,10 +40,7 @@ class WinnersList extends React.Component<any, any> {
                   ...prevState.dataWinners,
                   informationForportfolio,
                 ],
-              }),
-              () => {
-                console.log(this.state.dataWinners);
-              }
+              })
             );
           })
           .finally(() => {
@@ -67,7 +64,6 @@ class WinnersList extends React.Component<any, any> {
 
       this.forceUpdate();
     }, 2000);
-    console.log(this.state.dataWinners, "After sort");
   };
 
   render() {

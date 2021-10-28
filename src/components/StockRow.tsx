@@ -1,3 +1,4 @@
+import { IonCard, IonCardContent, IonCardHeader } from "@ionic/react";
 import React from "react";
 
 import StockApiService from "../services/StockApiService";
@@ -38,11 +39,11 @@ class StockRow extends React.Component<any, any> {
     const latestPrice = Number(this.state.portfolioData.latestPrice);
     let totalCost = cost * shares;
     let totalValue = latestPrice * shares;
-    let portfolioValue = totalValue - totalCost;
-    let percentageChange = (totalCost / totalValue) * 100;
+    let diffenceInValue = totalValue - totalCost;
+    let percentageChange = ((( totalValue - totalCost)/totalCost) * 100).toFixed(2);
     let calculation = {
       totalCost,
-      portfolioValue,
+      diffenceInValue,
       percentageChange,
       totalValue,
     };
@@ -58,14 +59,26 @@ class StockRow extends React.Component<any, any> {
     var stocks = this.state.portfolioData
     var calculation = this.state.calculation
     return (
-      <div>
-        
-          <div >
-            {stocks.companyName} {stocks.latestTime}
-            {calculation.totalCost}
-          </div>
+      <IonCard>
+          <IonCardHeader>
+            <p>Last updated: {stocks.latestTime} </p>
+          <h1>{stocks.companyName}</h1>
+          </IonCardHeader>
+          <IonCardContent>
+           <p> cost of holdings: <span style={{paddingLeft: '90px'}}>${calculation.totalCost}</span></p>
+            <p>current value: <span style={{paddingLeft: '90px'}}>${calculation.totalValue}</span></p>
+            <p>gains:<span style={{paddingLeft: '140px'}}> ${calculation.diffenceInValue}</span></p>
+            <p>% gains: <span style={{paddingLeft: '120px'}}>{calculation.percentageChange}%</span></p>
+
+
+
+          </IonCardContent>
+             
+            
+          
+          
        
-      </div>
+      </IonCard>
     );
   }
 }

@@ -14,36 +14,48 @@ class PortfolioSummary extends React.Component<any, any> {
   componentDidMount = () => {
     setTimeout(() => {
       this.totalValueForPortfolio();
-    }, 1500);
+    }, 1000);
   };
   totalValueForPortfolio = () => {
     let totalValue = 0;
     let totalCost = 0;
+    
     // eslint-disable-next-line array-callback-return
     this.props.portfolioItems.map((items) => {
+      
       const latestPrice = StockApiService.getLatestPrice(items.selectedTicker);
       latestPrice.then((latestP) => {
         let latestprice = Number(latestP);
 
+
         let cost = Number(items.enteredShare) * Number(items.enteredAmount);
         totalCost += cost;
+    
 
         let value = Number(items.enteredShare) * latestprice;
         totalValue += Number(value);
+        this.calculations(totalValue,totalCost)
       });
     });
 
+
+   
+  
+  };
+  calculations= (totalCost,totalValue)=>{
     setTimeout(() => {
+      console.log(totalCost)
       let PercentageChange = ((( totalValue - totalCost)/totalCost) * 100).toFixed(2);
       let TV = totalValue.toFixed(2);
       let TC = totalCost.toFixed(2);
+   
       this.setState({
         portfolioCost: TC,
         portfolioValue: TV,
         portfolioPercentageChange: PercentageChange,
       });
-    }, 1000);
-  };
+    }, 1500);
+  }
   render() {
     return (
       <IonCard>

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
 function StockGraph(props) {
@@ -32,7 +31,6 @@ function StockGraph(props) {
           // the keys are the dates
 
           for (var key in data["Time Series (Daily)"]) {
-            
             //we push in the date
             stockChartXValuesFunction.push(key);
 
@@ -50,37 +48,35 @@ function StockGraph(props) {
   }, [stockSymbol, props.selectedTicker]);
 
   return (
-    
     <div>
       <h1>Stock Market</h1>
-     
-      <div>
-          <Plot
-            data={[
-              {
-                x: stockChartXValues,
-                y: stockChartYValues,
-                type: "scatter",
-                mode: "lines",
-                marker: { color: "red" },
-              },
-            ]}
-            layout={{ width: 350,height: 400,
-            margin: {
-              l: 50,
-              r: 50,
-              b: 100,
-              t: 100,
-              pad: 4
-            },paper_bgcolor: "",
-            plot_bgcolor: '', title: stockSymbol }}
-          />
-       
-      
 
-      </div>
+      <Plot
+        data={[
+          {
+            x: stockChartXValues,
+            y: stockChartYValues,
+            type: "scatter",
+            mode: "lines",
+            marker: { color: "red" },
+          },
+        ]}
+        layout={{
+          width: 350,
+          height: 400,
+          margin: {
+            l: 30,
+            r: 50,
+            b: 100,
+            t: 100,
+            pad: 4,
+          },
+          paper_bgcolor: "",
+          plot_bgcolor: "",
+          title: stockSymbol,
+        }}
+      />
     </div>
-
   );
 }
 

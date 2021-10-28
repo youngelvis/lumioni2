@@ -28,13 +28,12 @@ class CurrentValue extends React.Component<any, any> {
     let totalValue = number * shares;
     let difference = Number(totalValue) - Number(totalCost);
     let percentageChange = 
-      (Number(totalCost) / Number(totalValue)) *
-      100
+    ((( totalValue - totalCost)/totalCost) * 100).toFixed(2)
     ;
     let TC = totalCost.toFixed(2);
     let TV = totalValue.toFixed(2);
     let D = difference.toFixed(2);
-    let PC = percentageChange.toFixed(2)
+    let PC = Number(percentageChange).toFixed(2)
     let calculation = {
       totalCost: TC,
       difference:D,

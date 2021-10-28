@@ -14,17 +14,17 @@ import StockRow from "../components/StockRow";
 
 class PortfolioDetails extends React.Component<any, any> {
   render() {
-    const { match, location, history } = this.props;
-    console.log(this.props, "elvis");
+    const { match, location } = this.props;
+    // console.log(this.props, "elvis");
     return (
       <IonPage>
         <IonToolbar>
-          <IonTitle>portfolio details PAGE</IonTitle>
+          <IonTitle>stock details</IonTitle>
           <IonButtons slot="start">
             <IonBackButton defaultHref="" />
           </IonButtons>
         </IonToolbar>
-        <IonContent >
+        <IonContent>
           <div
             style={{
               padding: "16px",
@@ -35,12 +35,7 @@ class PortfolioDetails extends React.Component<any, any> {
               fontSize: "16pt",
             }}
           >
-            <div style={{ textAlign: "center" }}>
-              <div></div>
-            </div>
-            StockGraph
             <StockGraph selectedTicker={match.params.ticker} />
-            portfolio info
             <StockRow stockInfo={location.state} />
             business news
             <News selectedTicker={match.params.ticker} />

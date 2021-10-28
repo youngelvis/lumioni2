@@ -92,7 +92,6 @@ class StockApiService {
         let PortfolioData = {
           companyName: data.quote.companyName,
           changePrice: data.quote.change,
-          currency: data.quote.currency,
           latestPrice: data.quote.latestPrice,
           openPrice: data.quote.iexOpen,
           isMarketOpen: data.quote.isUSMarketOpen,
