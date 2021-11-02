@@ -50,9 +50,9 @@ class CurrentValue extends React.Component<any, any> {
   render() {
     return (
       <div>
-        <p> cost of holdings: ${this.state.stockInfo.totalCost}</p>
-        <p> current value: ${this.state.stockInfo.totalValue}</p>
-        <p>total return: ${this.state.stockInfo.difference}</p>
+        <p> Investment:<span style={{paddingLeft: '48px'}}> ${this.state.stockInfo.totalCost}</span></p>
+        <p> current value:<span style={{paddingLeft: '32px'}}> ${this.state.stockInfo.totalValue}</span></p>
+        <p>Gains: <span style={{paddingLeft: '90px'}}>${this.state.stockInfo.difference}</span></p>
       </div>
     );
   }

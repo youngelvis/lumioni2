@@ -54,16 +54,16 @@ class PortfolioSummary extends React.Component<any, any> {
         portfolioValue: TV,
         portfolioPercentageChange: PercentageChange,
       });
-    }, 1500);
+    }, 1000);
   }
   render() {
     return (
       <IonCard>
         <IonCardHeader> <h1>Portfolio Summary</h1></IonCardHeader>
         <IonCardContent>
-          <p>portfolio cost: ${this.state.portfolioCost}</p>
-          <p>portfolio current Value: ${this.state.portfolioValue}</p>
-          <p>portfolio perfomance: {this.state.portfolioPercentageChange}%</p>
+          <p >Investment: <span style={{paddingLeft: '90px'}}>${this.state.portfolioCost}</span></p>
+          <p > current Value:<span style={{paddingLeft: '81px'}}> ${this.state.portfolioValue}</span></p>
+          <p>Gains :<span style={{paddingLeft: '132px'}}> {this.state.portfolioPercentageChange}%</span></p>
         </IonCardContent>
       </IonCard>
     );

@@ -1,7 +1,8 @@
 import {} from "@ionic/react";
 import { Component } from "react";
 import { Redirect } from "react-router";
-import { auth} from "../firebaseConfog";
+import { auth } from "../firebaseConfog";
+import './login.css'
 class SignIn extends Component<any, any> {
   constructor(props: any) {
     super(props);
@@ -13,13 +14,11 @@ class SignIn extends Component<any, any> {
   handleChange = (e) => {
     var value = e.target.value;
     var id = e.target.id;
-    this.setState(
-      {
-        [id]: value,
-      })
+    this.setState({
+      [id]: value,
+    });
   };
   componentDidMount = () => {
-    console.log("i was mounted- sigin");
   };
   handleSignin = () => {
     var email = this.state.emailSignin;
@@ -28,8 +27,8 @@ class SignIn extends Component<any, any> {
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         // Signed in
-       console.log("successfullty signed in")
-       return <Redirect to="/list"/>
+        console.log("successfullty signed in");
+        return <Redirect to="/list" />;
         // ...
       })
       .catch((error) => {
@@ -39,22 +38,16 @@ class SignIn extends Component<any, any> {
   };
   render() {
     return (
-      <div
-        style={{
-          padding: "16px",
-          backgroundColor: "lightblue",
-          margin: "12px",
-          color: "black",
-          borderRadius: "6px",
-          fontSize: "16pt",
-        }}
-      >
-        <strong> Sign IN</strong>
+      <>
+      <strong> <h3>Log IN</h3></strong>
+      <form>
+        
         <br />
         <br />
         Email:
         <br />
         <input
+          className="regField"
           type="email"
           id="emailSignin"
           value={this.state.emailSignin}
@@ -64,6 +57,7 @@ class SignIn extends Component<any, any> {
         Password:
         <br />
         <input
+          className="regField"
           type="password"
           id="passwordSignin"
           value={this.state.passwordSignin}
@@ -71,8 +65,11 @@ class SignIn extends Component<any, any> {
         />
         <br />
         <br />
-        <button onClick={this.handleSignin}>sign in</button>
-      </div>
+        <button onClick={this.handleSignin} className="submit-btn">
+          sign in
+        </button>
+      </form>
+      </>
     );
   }
 }
