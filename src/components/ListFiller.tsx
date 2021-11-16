@@ -64,7 +64,7 @@ class ListFiller extends Component<any, any> {
       enteredDate: "",
       companyName: "",
      
-    })}, 500)
+    })}, 2500)
   };
   
   render() {
@@ -75,6 +75,7 @@ class ListFiller extends Component<any, any> {
         <SelectedTicker onTakeTicker ={this.collectStockTicker} selectedTicker={this.state.selectedTicker}/>
         <div>
           <label>no of shares</label>
+          <br />
           <input
             type="number"
             min="0.01"
@@ -87,6 +88,7 @@ class ListFiller extends Component<any, any> {
         </div>
         <div>
           <label>amount per share</label>
+          <br />
           <input
             type="number"
             min="0.01"
@@ -98,6 +100,7 @@ class ListFiller extends Component<any, any> {
         </div>
         <div>
           <label>Transaction Date</label>
+          <br />
           <input
             type="date"
             min="2000-01-01"

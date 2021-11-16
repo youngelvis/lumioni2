@@ -10,9 +10,13 @@ import {
   IonCard,
   IonCardContent,
   IonCardHeader,
+  IonIcon,
+  IonAvatar,
+  IonImg,
 } from "@ionic/react";
+import { refreshCircleSharp } from "ionicons/icons";
 import React from "react";
-import { Redirect } from "react-router";
+
 import StockApiService from "../services/StockApiService";
 class ExplorePage extends React.Component<any, any> {
   constructor(props) {
@@ -32,9 +36,16 @@ class ExplorePage extends React.Component<any, any> {
         portfolioInformation
           .then((informationForportfolio) => {
             // array item has to enter this state
-            this.setState((prevState) => ({
-              exploreList: [...prevState.exploreList, informationForportfolio],
-            }));
+            let avatar = StockApiService.getLogo(a);
+            avatar.then((pic) => {
+              let info = {
+                a: pic,
+                b: informationForportfolio,
+              };
+              this.setState((prevState) => ({
+                exploreList: [...prevState.exploreList, info],
+              }));
+            });
           })
           .finally(() => {
             if (index === array.length - 1) {
@@ -44,51 +55,58 @@ class ExplorePage extends React.Component<any, any> {
       });
     });
 
-    loopPromise.then(() => {
-      console.log(this.state.exploreList, "After sort");
-    });
+    loopPromise.then(() => {});
   }
   render() {
-    if (this.props.appState.loggedIn == null) {
-      return <div> loading </div>;
-    } else if (this.props.appState.loggedIn === false) {
-      return <Redirect to="/home"></Redirect>;
-    } else {
-      return (
-        <IonPage>
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle>Explore PAGE</IonTitle>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent>
-            <IonCard>
-              <IonCardHeader>
-                {" "}
-                <h2>Popular Stocks</h2>
-              </IonCardHeader>
-              <IonCardContent>
-                <IonList>
-                  {this.state.exploreList.map((item, indexNum) => (
-                    <IonCard key={indexNum}>
-                    <IonItem >
-                      <IonLabel class="ion-text-justify" slot="start">
-                        <h3>{item.ticker}</h3>
-                        <h2>{item.companyName}</h2>
+    return (
+      <IonPage>
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Lumioni Stock Tracker</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent>
+          <IonCard>
+            <IonCardHeader>
+              <span style={{ textAlign: "right" }}>
+                <h2>
+                  <IonIcon
+                    icon={refreshCircleSharp}
+                    color="primary"
+                    onClick={() => window.location.reload()}
+                  ></IonIcon>
+                </h2>
+              </span>
+              <h2>Popular Stocks </h2>
+            </IonCardHeader>
+
+            <IonCardContent>
+              <IonList>
+                {this.state.exploreList.map((item, indexNum) => (
+                  <IonCard key={indexNum}>
+                    <IonItem>
+                      <IonAvatar>
+                        <IonImg src={item.a} />
+                      </IonAvatar>
+                      <IonLabel class="ion-text-justify" >
+                        <h3>{item.b.ticker}</h3>
+                        <h2>{item.b.companyName}</h2>
                       </IonLabel>
-                      <IonLabel class="ion-text-wrap ion-text-justify" slot="end">
-                        <h5>${item.latestPrice}</h5>
+                      <IonLabel
+                        class="ion-text-wrap ion-text-justify"
+                        slot="end"
+                      >
+                        <h5>${item.b.latestPrice}</h5>
                       </IonLabel>
                     </IonItem>
-                    </IonCard>
-                  ))}
-                </IonList>
-              </IonCardContent>
-            </IonCard>
-          </IonContent>
-        </IonPage>
-      );
-    }
+                  </IonCard>
+                ))}
+              </IonList>
+            </IonCardContent>
+          </IonCard>
+        </IonContent>
+      </IonPage>
+    );
   }
 }
 

@@ -28,7 +28,9 @@ class SignIn extends Component<any, any> {
       .then((userCredential) => {
         // Signed in
         console.log("successfullty signed in");
-        return <Redirect to="/list" />;
+        return setTimeout(() => {
+          <Redirect to="/list" />;
+        }, 500);
         // ...
       })
       .catch((error) => {
@@ -40,10 +42,9 @@ class SignIn extends Component<any, any> {
     return (
       <>
       <strong> <h3>Log IN</h3></strong>
-      <form>
+      
         
-        <br />
-        <br />
+        
         Email:
         <br />
         <input
@@ -68,7 +69,7 @@ class SignIn extends Component<any, any> {
         <button onClick={this.handleSignin} className="submit-btn">
           sign in
         </button>
-      </form>
+      
       </>
     );
   }

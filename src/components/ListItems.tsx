@@ -1,8 +1,10 @@
 import {
   IonAccordion,
   IonAccordionGroup,
+  IonAvatar,
   IonCard,
   IonIcon,
+  IonImg,
   IonItem,
   IonItemOption,
   IonItemOptions,
@@ -15,17 +17,27 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import CurrentValue from "./CurrentValue";
 import "../pages/all.css";
+import StockApiService from "../services/StockApiService";
 
 class ListItem extends Component<any, any> {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(props: any) {
     super(props);
-    this.state = {};
+    this.state = {
+      avatar: "",
+    };
   }
   // refresh=()=>{
   //   this.forceUpdate()
   // }
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    const avatar = StockApiService.getLogo(this.props.items.selectedTicker);
+    avatar.then((pic) => {
+      this.setState({
+        avatar: pic,
+      });
+    });
+  };
   deleteItem = () => {
     this.props.handleDelete(this.props.indexNum);
   };
@@ -36,11 +48,13 @@ class ListItem extends Component<any, any> {
         <IonAccordionGroup>
           <IonAccordion>
             <IonItem slot="header">
-              <IonLabel slot="start">
-                
-                  <h2>{this.props.items.selectedTicker} </h2>
-                  <h3>{this.props.items.companyName}</h3>
-                
+              <IonAvatar>
+                <IonImg src={this.state.avatar} />
+              </IonAvatar>
+
+              <IonLabel>
+                <h3>{this.props.items.companyName}</h3>
+                <h2>{this.props.items.selectedTicker} </h2>
               </IonLabel>
             </IonItem>
             <IonList slot="content">
@@ -48,18 +62,20 @@ class ListItem extends Component<any, any> {
                 <CurrentValue items={this.props.items} />
               </IonItem>
               <IonItem>
-              <Link
+                <Link
                   to={{
                     pathname: `/portfolioDetails/${this.props.items.selectedTicker}`,
                     state: { stockInfo: this.props.items },
                   }}
                   style={{ color: "blue", textDecoration: "none" }}
-                > <p>More info</p></Link>
+                >
+                  {" "}
+                  <p>More info</p>
+                </Link>
               </IonItem>
               <IonItem>
                 <IonIcon icon={trash} onClick={this.deleteItem}></IonIcon>
               </IonItem>
-              
             </IonList>
             <IonItemOptions side="end">
               <IonItemOption></IonItemOption>

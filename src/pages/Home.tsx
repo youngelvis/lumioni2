@@ -14,9 +14,7 @@ class Home extends Component<any, any> {
       formSwitcher: false,
     };
   }
-  componentDidMount = () => {
-    
-  };
+  componentDidMount = () => {};
 
   saveSignUpData = (data: any) => {
     this.setState(
@@ -45,7 +43,7 @@ class Home extends Component<any, any> {
         <SignUP onSavesignUpData={this.saveSignUpData} />
       );
       return (
-        <IonPage className= 'bgForLoginAndReg'>
+        <IonPage className="bgForLoginAndReg">
           <div className="mainBlock">
             {form}
             <br></br>

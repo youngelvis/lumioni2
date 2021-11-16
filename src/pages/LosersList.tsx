@@ -1,11 +1,4 @@
 import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonBackButton,
-  IonButtons,
   IonCard,
   IonCardContent,
   IonItem,
@@ -20,7 +13,27 @@ class LosersList extends React.Component<any, any> {
     super(props);
     this.state = {
       datalosers: [],
-      stockTicker: ["aapl", "fb", "TSLA", "msft"],
+      stockTicker: [
+        "aapl",
+        "nflx",
+        "googl",
+        "goog",
+        "TSLA",
+        "msft",
+        "nvda",
+        "FB",
+        "pltr",
+        "spce",
+        "gme",
+        "baba",
+        "spy",
+        "wmt",
+        "twtr",
+        "shop",
+        "adbe",
+        "arkk",
+        "zm",
+      ],
     };
   }
 
@@ -33,14 +46,16 @@ class LosersList extends React.Component<any, any> {
         portfolioInformation
           .then((informationForportfolio) => {
             // array item has to enter this state
-            this.setState(
-              (prevState) => ({
-                datalosers: [...prevState.datalosers, informationForportfolio],
-              }),
-              () => {
-                console.log(this.state.datalosers);
-              }
-            );
+            if (informationForportfolio.changePercentage < 0) {
+              this.setState(
+                (prevState) => ({
+                  datalosers: [
+                    ...prevState.datalosers,
+                    informationForportfolio,
+                  ],
+                })
+              );
+            }
           })
           .finally(() => {
             if (index === array.length - 1) {
@@ -67,37 +82,37 @@ class LosersList extends React.Component<any, any> {
   };
   render() {
     return (
-      <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonTitle>losers PAGE</IonTitle>
-            <IonButtons slot="start">
-              <IonBackButton defaultHref="/performancePage" />
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent color="primary">
-          <div style={{ textAlign: "center" }}>
-            <IonCard>
-            <IonCardHeader><h1>Top losers of the day</h1></IonCardHeader>
-              <IonCardContent>
-                {this.state.datalosers.map((stocks) => (
-                  <IonCard key={stocks.companyName}>
-                    <IonItem >
+      <div>
+        <div style={{ textAlign: "center" }}>
+          <IonCard>
+            <IonCardHeader>
+              <h5>Top losers of the day</h5>
+            </IonCardHeader>
+            <IonCardContent>
+              {this.state.datalosers.map((stocks) => (
+                <IonCard key={stocks.companyName}>
+                  <IonItem>
+                    <IonLabel>
+                      <p>{stocks.companyName}</p>
+                      <p> {stocks.ticker}</p>{" "}
+                    </IonLabel>
+                    <span style={{ paddingLeft: "40px" }}>
+                      {" "}
                       <IonLabel>
-                        <h2> {stocks.ticker}</h2> <h1>{stocks.companyName}</h1>{" "}
+                        <p></p>
+                        <p style={{ color: "red" }}>
+                          {" "}
+                          {stocks.changePercentage}%
+                        </p>
                       </IonLabel>
-                      <IonLabel>
-                        <h1> {stocks.changePercentage}</h1>
-                      </IonLabel>
-                    </IonItem>
-                  </IonCard>
-                ))}
-              </IonCardContent>
-            </IonCard>
-          </div>
-        </IonContent>
-      </IonPage>
+                    </span>
+                  </IonItem>
+                </IonCard>
+              ))}
+            </IonCardContent>
+          </IonCard>
+        </div>
+      </div>
     );
   }
 }

@@ -1,5 +1,4 @@
 import React from "react";
-
 import StockApiService from "../services/StockApiService";
 
 class CurrentValue extends React.Component<any, any> {
@@ -15,9 +14,7 @@ class CurrentValue extends React.Component<any, any> {
     );
     latestPrice.then((latestP) => {
       let latestprice = Number(latestP);
-      console.log(latestprice)
       this.businessLogic(latestprice);
-      
     });
   };
   businessLogic = (number) => {
@@ -27,21 +24,20 @@ class CurrentValue extends React.Component<any, any> {
     let totalCost = cost * shares;
     let totalValue = number * shares;
     let difference = Number(totalValue) - Number(totalCost);
-    let percentageChange = 
-    ((( totalValue - totalCost)/totalCost) * 100).toFixed(2)
-    ;
+    let percentageChange = (
+      ((totalValue - totalCost) / totalCost) *
+      100
+    ).toFixed(2);
     let TC = totalCost.toFixed(2);
     let TV = totalValue.toFixed(2);
     let D = difference.toFixed(2);
-    let PC = Number(percentageChange).toFixed(2)
+    let PC = Number(percentageChange).toFixed(2);
     let calculation = {
       totalCost: TC,
-      difference:D,
-      percentageChange:PC,
-      totalValue:TV,
+      difference: D,
+      percentageChange: PC,
+      totalValue: TV,
     };
-
-    console.log(totalValue);
     this.setState({
       stockInfo: calculation,
     });
@@ -49,10 +45,23 @@ class CurrentValue extends React.Component<any, any> {
 
   render() {
     return (
-      <div>
-        <p> Investment:<span style={{paddingLeft: '48px'}}> ${this.state.stockInfo.totalCost}</span></p>
-        <p> current value:<span style={{paddingLeft: '32px'}}> ${this.state.stockInfo.totalValue}</span></p>
-        <p>Gains: <span style={{paddingLeft: '90px'}}>${this.state.stockInfo.difference}</span></p>
+      <div style={{ width: "100%" }}>
+        <table style={{ width: "100%" }}>
+          <tbody>
+          <tr>
+            <td style={{ width: "70%" }}> Investment</td>
+            <td> $ {this.state.stockInfo.totalCost}</td>
+          </tr>
+          <tr>
+            <td> current value</td>
+            <td> $ {this.state.stockInfo.totalValue}</td>
+          </tr>
+          <tr>
+            <td> Gains</td>
+            <td> $ {this.state.stockInfo.difference}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     );
   }

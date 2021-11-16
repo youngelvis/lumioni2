@@ -1,16 +1,9 @@
 import {
-  IonBackButton,
-  IonButtons,
   IonCard,
   IonCardContent,
   IonCardHeader,
-  IonContent,
-  IonHeader,
   IonItem,
   IonLabel,
-  IonPage,
-  IonTitle,
-  IonToolbar,
 } from "@ionic/react";
 import React from "react";
 import StockApiService from "../services/StockApiService";
@@ -20,7 +13,27 @@ class WinnersList extends React.Component<any, any> {
     super(props);
     this.state = {
       dataWinners: [],
-      stockTicker: ["aapl", "fb", "TSLA", "msft"],
+      stockTicker: [
+        "aapl",
+        "nflx",
+        "googl",
+        "goog",
+        "TSLA",
+        "msft",
+        "nvda",
+        "FB",
+        "pltr",
+        "spce",
+        "gme",
+        "baba",
+        "spy",
+        "wmt",
+        "twtr",
+        "shop",
+        "adbe",
+        "arkk",
+        "zm",
+      ],
       isLoading: false,
     };
   }
@@ -34,14 +47,14 @@ class WinnersList extends React.Component<any, any> {
         portfolioInformation
           .then((informationForportfolio) => {
             // array item has to enter this state
-            this.setState(
-              (prevState) => ({
+            if (informationForportfolio.changePercentage > 0) {
+              this.setState((prevState) => ({
                 dataWinners: [
                   ...prevState.dataWinners,
                   informationForportfolio,
                 ],
-              })
-            );
+              }));
+            }
           })
           .finally(() => {
             if (index === array.length - 1) {
@@ -68,38 +81,36 @@ class WinnersList extends React.Component<any, any> {
 
   render() {
     return (
-      <IonPage>
-        <IonHeader></IonHeader>
-        <IonContent color="primary">
-          <IonToolbar>
-            <IonTitle>Winners PAGE</IonTitle>
-            <IonButtons slot="start">
-              <IonBackButton defaultHref="/performancePage" />
-            </IonButtons>
-          </IonToolbar>
-
-          <div style={{ textAlign: "center" }}>
-            <IonCard>
-              <IonCardHeader><h1>Top winners of the day</h1></IonCardHeader>
-              <IonCardContent>
-                {this.state.dataWinners.map((stocks) => (
-                  <IonCard key={stocks.companyName}>
-                    <IonItem >
+      <div>
+        <div style={{ textAlign: "center" }}>
+          <IonCard>
+            <IonCardHeader>
+              <h5>Top winners of the day</h5>
+            </IonCardHeader>
+            <IonCardContent>
+              {this.state.dataWinners.map((stocks) => (
+                <IonCard key={stocks.companyName}>
+                  <IonItem>
+                    <IonLabel>
+                      <p> {stocks.ticker}</p>
+                      <p>{stocks.companyName}</p>
+                    </IonLabel>
+                    <span style={{ paddingLeft: "40px" }}>
+                      {" "}
                       <IonLabel>
-                        <h2> {stocks.ticker}</h2> <h1>{stocks.companyName}</h1>{" "}
-                       
+                        <p style={{ color: "green" }}>
+                          {" "}
+                          {stocks.changePercentage}
+                        </p>
                       </IonLabel>
-                      <IonLabel>
-                        <h1> {stocks.changePercentage}</h1>
-                      </IonLabel>
-                    </IonItem>
-                  </IonCard>
-                ))}
-              </IonCardContent>
-            </IonCard>
-          </div>
-        </IonContent>
-      </IonPage>
+                    </span>
+                  </IonItem>
+                </IonCard>
+              ))}
+            </IonCardContent>
+          </IonCard>
+        </div>
+      </div>
     );
   }
 }

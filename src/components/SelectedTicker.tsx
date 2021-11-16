@@ -27,8 +27,8 @@ const SelectedTicker = (props) => {
   };
   return (
     <div>
-      <label>Stock ticker :</label>
-
+      <label>Stock ticker</label>
+      <br />
       <input
         onChange={handleChange}
         value={props.selectedTicker}

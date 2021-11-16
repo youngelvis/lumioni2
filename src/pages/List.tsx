@@ -21,7 +21,7 @@ import ListFiller from "../components/ListFiller";
 import ListItem from "../components/ListItems";
 
 import PortfolioSummary from "../components/PortfolioSummary";
-import { arrowDown, arrowUp } from "ionicons/icons";
+import { arrowDown, arrowUp, refreshCircleSharp } from "ionicons/icons";
 
 // import StockGraph from "../components/StockGraph";
 
@@ -127,7 +127,7 @@ class List extends Component<any, any> {
   componentDidMount = () => {};
 
   render() {
-    const buttonText = this.state.visible ?`${arrowUp}` : `${arrowDown}`;
+    const buttonText = this.state.visible ? `${arrowUp}` : `${arrowDown}`;
     if (this.props.appState.loggedIn == null) {
       return <div> loading </div>;
     } else if (this.props.appState.loggedIn === false) {
@@ -137,20 +137,29 @@ class List extends Component<any, any> {
         <IonPage>
           <IonHeader>
             <IonToolbar>
-              <IonTitle>portfolio page</IonTitle>
+              <IonTitle style={{ textAlign: "center" }}>
+                {this.props.appState.userData.firstName}'s portfolio page
+              </IonTitle>
             </IonToolbar>
           </IonHeader>
           <IonContent>
             <div
               style={{
                 padding: "16px",
-
                 margin: "12px",
                 color: "black",
                 borderRadius: "6px",
                 fontSize: "16pt",
               }}
             >
+              <div style={{ textAlign: "right" }}>
+                <IonIcon
+                  icon={refreshCircleSharp}
+                  color="success"
+                  onClick={() => window.location.reload()}
+                ></IonIcon>
+              </div>
+
               <div style={{ textAlign: "center" }}>
                 <div>
                   {this.state.visible ? (
@@ -158,17 +167,14 @@ class List extends Component<any, any> {
                   ) : (
                     "Add stock to portfolio   "
                   )}
-                  
+
                   <IonIcon
-                   icon={buttonText}
+                    icon={buttonText}
                     color="primary"
-                    
                     onClick={() => {
                       this.setState({ visible: !this.state.visible });
                     }}
-                  >
-                    
-                  </IonIcon>
+                  ></IonIcon>
 
                   <PortfolioSummary
                     portfolioItems={this.props.appState.userData.portfolio}

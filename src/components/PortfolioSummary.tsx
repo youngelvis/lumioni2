@@ -26,25 +26,17 @@ class PortfolioSummary extends React.Component<any, any> {
       const latestPrice = StockApiService.getLatestPrice(items.selectedTicker);
       latestPrice.then((latestP) => {
         let latestprice = Number(latestP);
-
-
         let cost = Number(items.enteredShare) * Number(items.enteredAmount);
         totalCost += cost;
-    
-
         let value = Number(items.enteredShare) * latestprice;
         totalValue += Number(value);
         this.calculations(totalValue,totalCost)
       });
     });
-
-
-   
-  
+ 
   };
   calculations= (totalCost,totalValue)=>{
     setTimeout(() => {
-      console.log(totalCost)
       let PercentageChange = ((( totalValue - totalCost)/totalCost) * 100).toFixed(2);
       let TV = totalValue.toFixed(2);
       let TC = totalCost.toFixed(2);
@@ -61,9 +53,24 @@ class PortfolioSummary extends React.Component<any, any> {
       <IonCard>
         <IonCardHeader> <h1>Portfolio Summary</h1></IonCardHeader>
         <IonCardContent>
-          <p >Investment: <span style={{paddingLeft: '90px'}}>${this.state.portfolioCost}</span></p>
-          <p > current Value:<span style={{paddingLeft: '81px'}}> ${this.state.portfolioValue}</span></p>
-          <p>Gains :<span style={{paddingLeft: '132px'}}> {this.state.portfolioPercentageChange}%</span></p>
+          <table style={{ width: "100%" }}>
+            <tbody>
+            <tr>
+              <td style={{ width: "70%" }}>Investment</td>
+              <td>$ {this.state.portfolioCost}</td>
+            </tr>
+            <tr>
+              <td>current Value</td>
+              <td>$ {this.state.portfolioValue}</td>
+            </tr>
+            <tr>
+              <td>%Gains</td>
+              <td>{this.state.portfolioPercentageChange} %</td>
+            </tr>
+            </tbody>
+          </table>
+         
+         
         </IonCardContent>
       </IonCard>
     );

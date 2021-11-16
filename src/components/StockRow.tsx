@@ -8,7 +8,7 @@ class StockRow extends React.Component<any, any> {
     super(props);
     this.state = {
       portfolioData: {},
-      calculation: {}
+      calculation: {},
     };
   }
 
@@ -38,9 +38,12 @@ class StockRow extends React.Component<any, any> {
     const shares = Number(this.props.stockInfo.stockInfo.enteredShare);
     const latestPrice = Number(this.state.portfolioData.latestPrice);
     let totalCost = cost * shares;
-    let totalValue = latestPrice * shares;
-    let diffenceInValue = totalValue - totalCost;
-    let percentageChange = ((( totalValue - totalCost)/totalCost) * 100).toFixed(2);
+    let totalValue =( Number(latestPrice * shares)).toFixed(2);
+    let diffenceInValue = (Number(totalValue) - totalCost).toFixed(2);
+    let percentageChange = (
+      ((Number(totalValue) - totalCost) / totalCost) *
+      100
+    ).toFixed(2);
     let calculation = {
       totalCost,
       diffenceInValue,
@@ -48,36 +51,42 @@ class StockRow extends React.Component<any, any> {
       totalValue,
     };
     // pushing this to the stockInfo in the state
-    this.setState(
-      {
-      calculation:calculation,
-    }
-    );
+    this.setState({
+      calculation: calculation,
+    });
   };
 
   render() {
-    var stocks = this.state.portfolioData
-    var calculation = this.state.calculation
+    var stocks = this.state.portfolioData;
+    var calculation = this.state.calculation;
     return (
       <IonCard>
-          <IonCardHeader>
-            <p>Last updated: {stocks.latestTime} </p>
+        <IonCardHeader>
+          <p>Last updated: {stocks.latestTime} </p>
           <h1>{stocks.companyName}</h1>
-          </IonCardHeader>
-          <IonCardContent>
-           <p> cost of holdings: <span style={{paddingLeft: '90px'}}>${calculation.totalCost}</span></p>
-            <p>current value: <span style={{paddingLeft: '90px'}}>${calculation.totalValue}</span></p>
-            <p>gains:<span style={{paddingLeft: '140px'}}> ${calculation.diffenceInValue}</span></p>
-            <p>% gains: <span style={{paddingLeft: '120px'}}>{calculation.percentageChange}%</span></p>
-
-
-
-          </IonCardContent>
-             
-            
-          
-          
-       
+        </IonCardHeader>
+        <IonCardContent>
+          <table style={{ width: "100%" }}>
+            <tbody>
+            <tr>
+              <td>Investment</td>
+              <td>{calculation.totalCost}</td>
+            </tr>
+            <tr>
+              <td>current value</td>
+              <td>{calculation.totalValue}</td>
+            </tr>
+            <tr>
+              <td>Gains</td>
+              <td>{calculation.diffenceInValue}</td>
+            </tr>
+            <tr>
+              <td>%Gains</td>
+              <td>{calculation.percentageChange} %</td>
+            </tr>
+            </tbody>
+          </table>
+        </IonCardContent>
       </IonCard>
     );
   }

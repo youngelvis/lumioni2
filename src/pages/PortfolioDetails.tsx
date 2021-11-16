@@ -21,14 +21,13 @@ class PortfolioDetails extends React.Component<any, any> {
         <IonToolbar>
           <IonTitle>stock details</IonTitle>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="" />
+            <IonBackButton defaultHref="/list" />
           </IonButtons>
         </IonToolbar>
         <IonContent>
           <div
             style={{
               padding: "16px",
-
               margin: "12px",
               color: "black",
               borderRadius: "6px",

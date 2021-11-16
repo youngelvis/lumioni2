@@ -79,16 +79,15 @@ class SignUP extends Component<any, any> {
   };
   render() {
     return (
-      <>
+      <div >
         <strong>
           {" "}
           <h2>Register</h2>
         </strong>
-        <form>
-          <br />
-          <br />
+        <br />
+       
           First Name:
-          <br />
+       
           <input
             className="regField"
             type="text"
@@ -131,8 +130,8 @@ class SignUP extends Component<any, any> {
           <button onClick={this.handleSignup} className="submit-btn">
             Register
           </button>
-        </form>
-      </>
+  
+      </div>
     );
   }
 }

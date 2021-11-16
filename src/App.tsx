@@ -177,20 +177,24 @@ class App extends Component<any, any> {
                   <LosersList />
                 </Route>
                 <Route exact path="/">
-                  <Redirect to="/home" />
+                  <Redirect to="/explorePage" />
                 </Route>
               </IonRouterOutlet>
 
               <IonTabBar slot="bottom">
-                <IonTabButton tab="list" href="/list">
-                  <IonLabel>list</IonLabel>
-                </IonTabButton>
-                <IonTabButton tab="explore page" href="/explorePage">
+              <IonTabButton tab="explore page" href="/explorePage">
                   <IonLabel>Explore page</IonLabel>
                 </IonTabButton>
+                
                 <IonTabButton tab="performance page" href="/performancePage">
                   <IonLabel>Performance page</IonLabel>
                 </IonTabButton>
+
+                <IonTabButton tab="list" href="/list">
+                  <IonLabel>list</IonLabel>
+                </IonTabButton>
+                
+                
               </IonTabBar>
             </IonTabs>
           </IonReactRouter>

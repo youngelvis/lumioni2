@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.lumioni",
+	"appName": "lumioni",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

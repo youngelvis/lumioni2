@@ -15,17 +15,21 @@ button{
     border-radius: 6px !important;
 }
 .mainBlock{
+    
     border-radius: 5px;
     box-sizing: border-box;
     text-align: center;
     background-color: rgb(76, 194, 210);
     padding: 20px;
     width: 100%;
-    max-width: 350px;
-    margin: 100px auto;
+    max-width: 340px;
+    margin: 70px auto;
     display:table;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 .bgForLoginAndReg{
     background-image: url(../image/logiPage.jpeg);
 }
+table, th, td {
+    border:0px solid black;
+  }
