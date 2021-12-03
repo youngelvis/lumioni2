@@ -13,24 +13,30 @@ import { Link } from "react-router-dom";
 import StockApiService from "../services/StockApiService";
 
 class News extends React.Component<any, any> {
+  // creating a constructor
   constructor(props) {
     super(props);
+    // create a state variable named Newscontainer thats an array
     this.state = {
       NewsContainer: [],
     };
   }
 
   componentDidMount() {
+    // creating a promise to get the information
     var loopPromise = new Promise<void>((resolve, reject) => {
+      // getting the data from the api
       let portfolioInformation = StockApiService.getNewsInformation(
         this.props.selectedTicker
       );
-      
 
+      // changing from promise to real value
       portfolioInformation
         .then((informationForportfolio) => {
+          //looping the array from the api
           // eslint-disable-next-line array-callback-return
           informationForportfolio.map((items) => {
+            //copying the array from the api to the state array
             this.setState((prevState) => ({
               NewsContainer: [...prevState.NewsContainer, items],
             }));
@@ -55,19 +61,26 @@ class News extends React.Component<any, any> {
   render() {
     return (
       <div>
+        {/* looping through the state array named news container */}
         {this.state.NewsContainer.map((stocks, indexNum) => (
-          <Link to={{pathname:stocks.newsUrl}} target ="_blank"key={indexNum} style ={{textDecoration: 'none'}}>
-          <IonCard key={indexNum} color='light'>
-            
-            <IonImg src={stocks.newsImage} />
-            <IonCardHeader>
-              <IonCardSubtitle>{stocks.newsSource}</IonCardSubtitle>
-              <IonCardTitle><h3>{stocks.newsHeadlines}</h3></IonCardTitle>
-            </IonCardHeader>
+          // link to  News url
+          <Link
+            to={{ pathname: stocks.newsUrl }}
+            target="_blank"
+            key={indexNum}
+            style={{ textDecoration: "none" }}
+          >
+            <IonCard key={indexNum} color="light">
+              <IonImg src={stocks.newsImage} />
+              <IonCardHeader>
+                <IonCardSubtitle>{stocks.newsSource}</IonCardSubtitle>
+                <IonCardTitle>
+                  <h3>{stocks.newsHeadlines}</h3>
+                </IonCardTitle>
+              </IonCardHeader>
 
-            <IonCardContent>{stocks.newsSummary}</IonCardContent>
-          
-          </IonCard>
+              <IonCardContent>{stocks.newsSummary}</IonCardContent>
+            </IonCard>
           </Link>
         ))}
       </div>

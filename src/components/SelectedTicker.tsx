@@ -1,4 +1,5 @@
 const SelectedTicker = (props) => {
+  // creating an array of stock tickers
   const stockTicker = [
     "aapl",
     "nflx",
@@ -20,9 +21,10 @@ const SelectedTicker = (props) => {
     "arkk",
     "zm",
   ];
+  // to handle inputs from users
   const handleChange = (e) => {
     e.preventDefault();
-
+    // transfering data to ListFiller components
     props.onTakeTicker(e.target.value);
   };
   return (
@@ -34,6 +36,7 @@ const SelectedTicker = (props) => {
         value={props.selectedTicker}
         list="stockTicker"
         type="text"
+        autoFocus
       />
 
       <datalist id="stockTicker">

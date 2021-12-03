@@ -8,39 +8,47 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { Component } from "react";
-import { arrowForwardSharp, arrowBackCircleSharp, refreshCircleSharp } from "ionicons/icons";
+import {
+  arrowForwardSharp,
+  arrowBackCircleSharp,
+  refreshCircleSharp,
+} from "ionicons/icons";
 
 import "./all.css";
 import WinnersList from "./WinnersList";
 import LosersList from "./LosersList";
 
 class PerformancePage extends Component<any, any> {
+  // create a constructor
   constructor(props: any) {
     super(props);
+    // create a state
     this.state = {
       change: false,
     };
   }
 
   render() {
-    const buttonText = !this.state.change ?'Loser list ' : 'winners list ';
-    const iconText = !this.state.change ?`${arrowForwardSharp}` : ` ${arrowBackCircleSharp}`;
-    const colour = !this.state.change ?'danger' : 'success';
+    // create variable that changes depending on if the state variable named change is true or false
+    const buttonText = !this.state.change ? "Loser list " : "winners list ";
+    const iconText = !this.state.change
+      ? `${arrowForwardSharp}`
+      : ` ${arrowBackCircleSharp}`;
+    const colour = !this.state.change ? "danger" : "success";
     return (
-      <IonPage >
+      <IonPage>
         <IonHeader>
           <IonToolbar>
             <IonTitle>Performance PAGE</IonTitle>
           </IonToolbar>
-        </IonHeader >
-       
-        <IonContent color='dark'>
+        </IonHeader>
 
+        <IonContent color="dark">
           <div
-          className= 'bgForLoginAndReg'
+            className="bgForLoginAndReg"
             style={{
               padding: "16px",
-          
+
               margin: "12px",
               color: "black",
               borderRadius: "6px",
@@ -48,32 +56,28 @@ class PerformancePage extends Component<any, any> {
             }}
           >
             <span style={{ textAlign: "right" }}>
-                <h2>
-                  <IonIcon
-                    icon={refreshCircleSharp}
-                    color= 'success'
-                    onClick={() => window.location.reload()}
-                  ></IonIcon>
-                </h2>
-              </span>
-            <div style={{textAlign: 'center'}}>
+              <h2>
+                <IonIcon
+                  icon={refreshCircleSharp}
+                  color="success"
+                  onClick={() => window.location.reload()}
+                ></IonIcon>
+              </h2>
+            </span>
+            <div style={{ textAlign: "center" }}>
               <IonButton
-              color={colour} 
-              onClick={() => {
-                this.setState({ change: !this.state.change});
-              }}>{buttonText}
-              <IonIcon
-              icon={iconText}></IonIcon></IonButton>
-              {!this.state.change ? (
-                <WinnersList />
-              ):(
-                <LosersList />
-              )}
-
+                color={colour}
+                onClick={() => {
+                  this.setState({ change: !this.state.change });
+                }}
+              >
+                {buttonText}
+                <IonIcon icon={iconText}></IonIcon>
+              </IonButton>
+              {!this.state.change ? <WinnersList /> : <LosersList />}
             </div>
           </div>
         </IonContent>
-     
       </IonPage>
     );
   }

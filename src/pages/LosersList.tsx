@@ -9,8 +9,10 @@ import React from "react";
 import StockApiService from "../services/StockApiService";
 
 class LosersList extends React.Component<any, any> {
+  // create a constructor
   constructor(props) {
     super(props);
+    // create state variables
     this.state = {
       datalosers: [],
       stockTicker: [
@@ -38,15 +40,19 @@ class LosersList extends React.Component<any, any> {
   }
 
   componentDidMount() {
+    // create a promise
     var loopPromise = new Promise<void>((resolve, reject) => {
+      //loop through state variable named stock ticker
       this.state.stockTicker.forEach((a, index, array) => {
+        // get data from api
         let portfolioInformation = StockApiService.getInformationForSorting(a);
-        // let percentageChange = StockApiService.getChangePercentage(a);
-
+        
+        // turn promise to real value
         portfolioInformation
           .then((informationForportfolio) => {
-            // array item has to enter this state
+            // check if the value is less than zero
             if (informationForportfolio.changePercentage < 0) {
+              // push data to array
               this.setState(
                 (prevState) => ({
                   datalosers: [
@@ -65,20 +71,23 @@ class LosersList extends React.Component<any, any> {
       });
     });
     loopPromise.then(() => {
+      // call this fucntion
       this.work();
     });
   }
 
-  // console.log(data1[1].companyName, "des");
+  // create this function
   work = () => {
+    // create a timeout to make the app get the necessary data
     setTimeout(() => {
+      //sort the information ascending order
       this.state.datalosers.sort((a, b) =>
         a.changePercentage > b.changePercentage ? 1 : -1
       );
-
+      // render again
       this.forceUpdate();
     }, 2000);
-    console.log(this.state.datalosers, "After sort");
+    
   };
   render() {
     return (
@@ -86,7 +95,7 @@ class LosersList extends React.Component<any, any> {
         <div style={{ textAlign: "center" }}>
           <IonCard>
             <IonCardHeader>
-              <h5>Top losers of the day</h5>
+              <h5> worst losers of the day</h5>
             </IonCardHeader>
             <IonCardContent>
               {this.state.datalosers.map((stocks) => (
@@ -102,7 +111,7 @@ class LosersList extends React.Component<any, any> {
                         <p></p>
                         <p style={{ color: "red" }}>
                           {" "}
-                          {stocks.changePercentage}%
+                          {stocks.changePercentage} %
                         </p>
                       </IonLabel>
                     </span>

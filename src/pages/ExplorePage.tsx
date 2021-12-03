@@ -19,29 +19,49 @@ import React from "react";
 
 import StockApiService from "../services/StockApiService";
 class ExplorePage extends React.Component<any, any> {
+  // create a constructor
   constructor(props) {
     super(props);
+    // create a state
     this.state = {
       exploreList: [],
-      stockTicker: ["aapl", "fb", "googl"],
+      stockTicker: [
+        "aapl",
+        "fb",
+        "googl",
+        "baba",
+        "spy",
+        "wmt",
+        "twtr",
+        "shop",
+        "adbe",
+        "arkk",
+        "zm",
+      ],
     };
   }
 
   componentDidMount() {
+    // create a promise
     var loopPromise = new Promise<void>((resolve, reject) => {
+      // loop through the state variable named stockTicker
       this.state.stockTicker.forEach((a, index, array) => {
+        // get data from api
         let portfolioInformation = StockApiService.getInformationForExplore(a);
-        // let percentageChange = StockApiService.getChangePercentage(a);
 
+        // change promise to real value
         portfolioInformation
           .then((informationForportfolio) => {
-            // array item has to enter this state
+            // get data from api
             let avatar = StockApiService.getLogo(a);
+            // change promise to real value
             avatar.then((pic) => {
+              // create object to hold data of all the data gotten from api
               let info = {
                 a: pic,
                 b: informationForportfolio,
               };
+              // copy object to array in the state
               this.setState((prevState) => ({
                 exploreList: [...prevState.exploreList, info],
               }));
@@ -88,15 +108,17 @@ class ExplorePage extends React.Component<any, any> {
                       <IonAvatar>
                         <IonImg src={item.a} />
                       </IonAvatar>
-                      <IonLabel class="ion-text-justify" >
-                        <h3>{item.b.ticker}</h3>
-                        <h2>{item.b.companyName}</h2>
+                      <IonLabel class="ion-text-justify">
+                        <h2 style={{ paddingLeft: "10px" }}>
+                          {item.b.companyName}
+                        </h2>
+                        <h3 style={{ paddingLeft: "10px" }}>{item.b.ticker}</h3>
                       </IonLabel>
                       <IonLabel
                         class="ion-text-wrap ion-text-justify"
                         slot="end"
                       >
-                        <h5>${item.b.latestPrice}</h5>
+                        <h5>$ {item.b.latestPrice}</h5>
                       </IonLabel>
                     </IonItem>
                   </IonCard>

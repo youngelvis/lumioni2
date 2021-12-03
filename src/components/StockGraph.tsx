@@ -25,7 +25,7 @@ function StockGraph(props) {
         })
         //get the data
         .then(function (data) {
-          console.log(data);
+          
 
           //the name of the data base we are using is time series(daily)
           // the keys are the dates
@@ -61,6 +61,7 @@ function StockGraph(props) {
             marker: { color: "red" },
           },
         ]}
+        // to adjust graph size
         layout={{
           width: 350,
           height: 400,

@@ -9,8 +9,10 @@ import React from "react";
 import StockApiService from "../services/StockApiService";
 
 class WinnersList extends React.Component<any, any> {
+  // create a constructor
   constructor(props) {
     super(props);
+    // create state variables
     this.state = {
       dataWinners: [],
       stockTicker: [
@@ -39,15 +41,17 @@ class WinnersList extends React.Component<any, any> {
   }
 
   componentDidMount() {
+    // create a promise
     var loopPromise = new Promise<void>((resolve, reject) => {
+      //loop throught the state variable named stockTicker
       this.state.stockTicker.forEach((a, index, array) => {
         let portfolioInformation = StockApiService.getInformationForSorting(a);
-        // let percentageChange = StockApiService.getChangePercentage(a);
-
+        // turn promise to real data
         portfolioInformation
           .then((informationForportfolio) => {
-            // array item has to enter this state
+            // if data from api is more than zero
             if (informationForportfolio.changePercentage > 0) {
+              // push data to state
               this.setState((prevState) => ({
                 dataWinners: [
                   ...prevState.dataWinners,
@@ -56,6 +60,7 @@ class WinnersList extends React.Component<any, any> {
               }));
             }
           })
+
           .finally(() => {
             if (index === array.length - 1) {
               resolve();
@@ -64,13 +69,16 @@ class WinnersList extends React.Component<any, any> {
       });
     });
     loopPromise.then(() => {
+      // call this function
       this.work();
     });
   }
 
-  // console.log(data1[1].companyName, "des");
+  // create function
   work = () => {
+    // set timeout to allow application get needed data
     setTimeout(() => {
+      // sort in decending order
       this.state.dataWinners.sort((a, b) =>
         a.changePercentage < b.changePercentage ? 1 : -1
       );
@@ -92,15 +100,15 @@ class WinnersList extends React.Component<any, any> {
                 <IonCard key={stocks.companyName}>
                   <IonItem>
                     <IonLabel>
-                      <p> {stocks.ticker}</p>
-                      <p>{stocks.companyName}</p>
+                      <h2>{stocks.companyName}</h2>
+                      <h3> {stocks.ticker}</h3>
                     </IonLabel>
                     <span style={{ paddingLeft: "40px" }}>
                       {" "}
                       <IonLabel>
                         <p style={{ color: "green" }}>
                           {" "}
-                          {stocks.changePercentage}
+                          {stocks.changePercentage} %
                         </p>
                       </IonLabel>
                     </span>

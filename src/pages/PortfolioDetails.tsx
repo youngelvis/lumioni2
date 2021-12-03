@@ -14,6 +14,7 @@ import StockRow from "../components/StockRow";
 
 class PortfolioDetails extends React.Component<any, any> {
   render() {
+    // set this variables to prop data that have the same name
     const { match, location } = this.props;
     // console.log(this.props, "elvis");
     return (

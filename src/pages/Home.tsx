@@ -7,8 +7,10 @@ import "./all.css";
 import { Redirect } from "react-router";
 
 class Home extends Component<any, any> {
+  // create constructor
   constructor(props: any) {
     super(props);
+    // create state variables
     this.state = {
       signUpData: {},
       formSwitcher: false,
@@ -16,27 +18,34 @@ class Home extends Component<any, any> {
   }
   componentDidMount = () => {};
 
+  // create function to handle data from signup page
   saveSignUpData = (data: any) => {
+    // set state to data gotten from sign up page
     this.setState(
       {
         signUpData: data,
       },
+      // transfer data to App component
       () => {
         this.props.onSavesignUpData(this.state.signUpData);
       }
     );
   };
+  // function that switches the login form and signup form
   formSwitcher = (action) => {
     this.setState({
       formSwitcher: action === "register" ? true : false,
     });
   };
   render() {
+    // if user is logged in user should be redirected to List page
     if (this.props.appState.loggedIn == null) {
       return <div> loading </div>;
     } else if (this.props.appState.loggedIn === true) {
       return <Redirect to="/list"></Redirect>;
     } else {
+      // it displays this on the dom if user is not logged in
+      // it shows this if login form at first and changes when user clicks on a button
       const form = !this.state.formSwitcher ? (
         <SignIn />
       ) : (
@@ -50,6 +59,7 @@ class Home extends Component<any, any> {
             {!this.state.formSwitcher ? (
               <span className="underline">
                 Not Registered?{" "}
+                {/* if users clicks on this button it switches the form from login to signup */}
                 <button
                   className="linkBtn"
                   onClick={() =>
@@ -65,6 +75,7 @@ class Home extends Component<any, any> {
             ) : (
               <span className="underline">
                 Have an Account?{" "}
+                {/* if users clicks on this button it switches the form from signup to login*/}
                 <button
                   className="linkBtn"
                   onClick={() =>

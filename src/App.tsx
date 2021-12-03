@@ -191,7 +191,7 @@ class App extends Component<any, any> {
                 </IonTabButton>
 
                 <IonTabButton tab="list" href="/list">
-                  <IonLabel>list</IonLabel>
+                  <IonLabel>Portfolio</IonLabel>
                 </IonTabButton>
                 
                 

@@ -2,8 +2,10 @@ import { Component } from "react";
 import { auth, db } from "../firebaseConfog";
 import "./login.css";
 class SignUP extends Component<any, any> {
+  // create a constructor
   constructor(props: any) {
     super(props);
+    // create state variables
     this.state = {
       firstName: "",
       lastName: "",
@@ -11,15 +13,19 @@ class SignUP extends Component<any, any> {
       passwordSignup: "",
     };
   }
+  // functions to deal with form input
   handleChange = (e) => {
+    // value of input
     var value = e.target.value;
+    // id of input
     var id = e.target.id;
+    // setting state variable with value in input id with the same name
     this.setState({
       [id]: value,
     });
   };
   componentDidMount = () => {};
-
+  // function to help create user document
   createDocumentForNewUser = (userCredential) => {
     this.connectCurrentUser(userCredential);
 
@@ -36,7 +42,7 @@ class SignUP extends Component<any, any> {
         console.log("userData document added to database");
       })
       .catch((error) => {
-        console.error("Error writing document: ", error);
+        alert(`${error}`);
       });
   };
 
@@ -56,16 +62,16 @@ class SignUP extends Component<any, any> {
   };
 
   handleSignup = () => {
+    // transfer data to app component
     this.props.onSavesignUpData(this.state);
-    console.log(this.state);
+    // variable to hold email
     var email = this.state.emailSignup;
+    // variable to hold password
     var password = this.state.passwordSignup;
+    // to create user
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        // Signed in
-        // var user = userCredential.user;
-        // // ...
         console.log("succesfully registered");
 
         console.log("Creating Document");
@@ -79,58 +85,55 @@ class SignUP extends Component<any, any> {
   };
   render() {
     return (
-      <div >
+      <div>
         <strong>
           {" "}
           <h2>Register</h2>
         </strong>
         <br />
-       
-          First Name:
-       
-          <input
-            className="regField"
-            type="text"
-            id="firstName"
-            value={this.state.firstName}
-            onChange={this.handleChange}
-          />
-          <br />
-          Last Name:
-          <br />
-          <input
-            className="regField"
-            type="text"
-            id="lastName"
-            value={this.state.lastName}
-            onChange={this.handleChange}
-          />
-          <br />
-          Email:
-          <br />
-          <input
-            className="regField"
-            type="email"
-            id="emailSignup"
-            value={this.state.emailSignup}
-            onChange={this.handleChange}
-          />
-          <br />
-          Password:
-          <br />
-          <input
-            className="regField"
-            type="password"
-            id="passwordSignup"
-            value={this.state.passwordSignup}
-            onChange={this.handleChange}
-          />
-          <br />
-          <br />
-          <button onClick={this.handleSignup} className="submit-btn">
-            Register
-          </button>
-  
+        First Name:
+        <input
+          className="regField"
+          type="text"
+          id="firstName"
+          value={this.state.firstName}
+          onChange={this.handleChange}
+        />
+        <br />
+        Last Name:
+        <br />
+        <input
+          className="regField"
+          type="text"
+          id="lastName"
+          value={this.state.lastName}
+          onChange={this.handleChange}
+        />
+        <br />
+        Email:
+        <br />
+        <input
+          className="regField"
+          type="email"
+          id="emailSignup"
+          value={this.state.emailSignup}
+          onChange={this.handleChange}
+        />
+        <br />
+        Password:
+        <br />
+        <input
+          className="regField"
+          type="password"
+          id="passwordSignup"
+          value={this.state.passwordSignup}
+          onChange={this.handleChange}
+        />
+        <br />
+        <br />
+        <button onClick={this.handleSignup} className="submit-btn">
+          Register
+        </button>
       </div>
     );
   }

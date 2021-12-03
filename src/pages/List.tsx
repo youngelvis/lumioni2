@@ -1,6 +1,6 @@
 import {
+  IonButton,
   IonCard,
-  IonCardHeader,
   IonCardTitle,
   IonContent,
   IonHeader,
@@ -21,13 +21,15 @@ import ListFiller from "../components/ListFiller";
 import ListItem from "../components/ListItems";
 
 import PortfolioSummary from "../components/PortfolioSummary";
-import { arrowDown, arrowUp, refreshCircleSharp } from "ionicons/icons";
+import { arrowUp, refreshCircleSharp, addCircle } from "ionicons/icons";
 
 // import StockGraph from "../components/StockGraph";
 
 class List extends Component<any, any> {
+  // create a constructor
   constructor(props: any) {
     super(props);
+    // create state variables
     this.state = {
       dataFromForm: "",
       tempData: "",
@@ -37,10 +39,12 @@ class List extends Component<any, any> {
   }
   // function to get item from ListFiller component
   getInformationFromForm = (data) => {
+    // set state varible dataFromForm to data gotten from listfiller component
     this.setState(
       {
         dataFromForm: data,
       },
+      //c all handle add function
       () => {
         this.handleAdd();
       }
@@ -75,7 +79,7 @@ class List extends Component<any, any> {
         // The document probably doesn't exist.
         console.error("Error updating document: ", error);
       });
-    // to force the application to render again
+    // to force the application to reload
 
     setTimeout(() => {
       window.location.reload();
@@ -97,7 +101,7 @@ class List extends Component<any, any> {
         portfolio: this.props.appState.userData.portfolio,
       })
       .then(() => {
-        console.log("current stock successfully added!");
+        alert("current stock successfully added!");
       })
       .catch((error) => {
         // The document probably doesn't exist.
@@ -106,10 +110,10 @@ class List extends Component<any, any> {
 
     // to force the application to render again
     // this.forceUpdate()
-
+    // reload poage
     setTimeout(() => {
       window.location.reload();
-    }, 500);
+    }, 1000);
   };
 
   handleSignOut = () => {
@@ -124,10 +128,12 @@ class List extends Component<any, any> {
         console.log(error);
       });
   };
-  componentDidMount = () => {};
+  componentDidMount = () => {
+   
+  };
 
   render() {
-    const buttonText = this.state.visible ? `${arrowUp}` : `${arrowDown}`;
+    const buttonText = this.state.visible ? `${arrowUp}` : `${addCircle}`;
     if (this.props.appState.loggedIn == null) {
       return <div> loading </div>;
     } else if (this.props.appState.loggedIn === false) {
@@ -162,30 +168,19 @@ class List extends Component<any, any> {
 
               <div style={{ textAlign: "center" }}>
                 <div>
-                  {this.state.visible ? (
-                    <ListFiller collectData={this.getInformationFromForm} />
-                  ) : (
-                    "Add stock to portfolio   "
-                  )}
-
-                  <IonIcon
-                    icon={buttonText}
-                    color="primary"
-                    onClick={() => {
-                      this.setState({ visible: !this.state.visible });
-                    }}
-                  ></IonIcon>
-
                   <PortfolioSummary
                     portfolioItems={this.props.appState.userData.portfolio}
                   />
                   <IonCard>
-                    <IonCardHeader>
-                      <IonCardTitle>
-                        <h2> Portfolio List</h2>
-                      </IonCardTitle>
-                    </IonCardHeader>
+                    <IonCardTitle>
+                      <h2 style={{ textAlign: "left", paddingLeft: "10px" }}>
+                        {" "}
+                        Portfolio List
+                      </h2>
+                    </IonCardTitle>
+
                     <IonList>
+                      {/* loop through item in database */}
                       {this.props.appState.userData.portfolio
                         ? this.props.appState.userData.portfolio.map(
                             (item, indexNum) => (
@@ -201,12 +196,31 @@ class List extends Component<any, any> {
                           )
                         : "there are no items in the list"}
                     </IonList>
+                    {/* switch between having form display or not */}
+                    {this.state.visible ? (
+                      // if form is displayed collect data from Listfiler component
+                      <ListFiller collectData={this.getInformationFromForm} />
+                    ) : (
+                      ""
+                    )}
+                  {/* switch between two icon depending on if the form is shown or not */}
+                    <IonIcon
+                      icon={buttonText}
+                      color="primary"
+                      size="large"
+                      onClick={() => {
+                        this.setState({ visible: !this.state.visible });
+                      }}
+                    ></IonIcon>
                   </IonCard>
                 </div>
 
                 <br />
                 <br />
-                <button onClick={this.handleSignOut}>sign out</button>
+                {/* click to sign out */}
+                <IonButton onClick={this.handleSignOut}
+                size='small'
+                color='light'>sign out</IonButton>
               </div>
             </div>
           </IonContent>
